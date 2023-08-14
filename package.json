@@ -1,6 +1,25 @@
 {
+	"name": "back-end",
+	"version": "1.0.0",
+	"description": "Tractor Project",
+	"main": "app.ts",
+	"repository": {
+		"type": "git",
+		"url": "https://kdt-gitlab.elice.io/sw_track/class_05/web_2_project/team02/back-end.git"
+	},
+	"author": "Tractor",
+	"license": "ISC",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "npx ts-node app.ts",
+		"dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" app.ts"
+	},
 	"dependencies": {
+		"@types/bcrypt": "^5.0.0",
 		"@types/jsonwebtoken": "^9.0.2",
+		"@types/mongoose": "^5.11.97",
+		"@types/passport": "^1.0.12",
+		"@types/passport-jwt": "^3.0.9",
 		"bcrypt": "^5.1.0",
 		"body-parser": "^1.20.2",
 		"cors": "^2.8.5",
@@ -19,10 +38,5 @@
 		"nodemon": "^3.0.1",
 		"ts-node": "^10.9.1",
 		"typescript": "^5.1.6"
-	},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "npx ts-node app.ts",
-		"dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" app.ts"
 	}
 }
