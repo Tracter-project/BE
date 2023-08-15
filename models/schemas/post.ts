@@ -1,6 +1,6 @@
 import { Schema ,model, Document } from "mongoose";
 
-export interface Ipost extends Document {
+export interface IPost extends Document {
     subject: String;
     user: Schema.Types.ObjectId;
     title: String;
@@ -10,7 +10,7 @@ export interface Ipost extends Document {
 }
 
 // PostSchema
-const PostSchema: Schema<Ipost> = new Schema<Ipost> (
+const PostSchema: Schema<IPost> = new Schema<IPost> (
     {
         subject: {
             type: String,
@@ -19,7 +19,7 @@ const PostSchema: Schema<Ipost> = new Schema<Ipost> (
         },
         user: {
             type: Schema.Types.ObjectId,
-            ref: "User",
+            ref: 'User',
             required: true,
         },
         title: {
@@ -33,8 +33,8 @@ const PostSchema: Schema<Ipost> = new Schema<Ipost> (
         // contentImage: {},
         comments: {
             type: Schema.Types.ObjectId,
-            ref: "Comment",
-            required: false
+            ref: 'Comment',
+            required: false,
         }
     },
     {
@@ -43,4 +43,4 @@ const PostSchema: Schema<Ipost> = new Schema<Ipost> (
 )
 
 
-export default model<Ipost>('Post', PostSchema)
+export default model<IPost>('Post', PostSchema)
