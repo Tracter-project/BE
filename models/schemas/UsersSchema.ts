@@ -10,7 +10,7 @@ export interface IUser extends Document {
 }
 
 // UserSchema
-const UserSchema: Schema<IUser> = new Schema<IUser> (
+const UserSchema = new Schema<IUser> (
     {
         email: {
             type: String,

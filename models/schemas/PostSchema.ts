@@ -1,16 +1,16 @@
 import { Schema ,model, Document } from "mongoose";
 
 export interface IPost extends Document {
-    subject: String;
+    subject: string;
     user: Schema.Types.ObjectId;
-    title: String;
+    title: string;
     contents: string;
     // contentImage: ;
     comments: Schema.Types.ObjectId;
 }
 
 // PostSchema
-const PostSchema: Schema<IPost> = new Schema<IPost> (
+const PostSchema = new Schema<IPost> (
     {
         subject: {
             type: String,

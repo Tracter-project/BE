@@ -3,11 +3,11 @@ import { Schema ,model, Document } from "mongoose";
 export interface IComment extends Document {
     postId: Schema.Types.ObjectId;
     user: Schema.Types.ObjectId;
-    comment: String;
+    comment: string;
 }
 
 // CommentSchema
-const CommentSchema: Schema<IComment> = new Schema<IComment> (
+const CommentSchema = new Schema<IComment> (
     {
         postId: {
             type: Schema.Types.ObjectId,
