@@ -1,6 +1,6 @@
 import { Schema, model ,Document } from "mongoose";
 
-export interface Iuser extends Document {
+export interface IUser extends Document {
     email: string;
     nickname: string;
     password: string;
@@ -10,9 +10,9 @@ export interface Iuser extends Document {
 }
 
 // UserSchema
-const UserSchema: Schema<Iuser> = new Schema<Iuser> (
+const UserSchema: Schema<IUser> = new Schema<IUser> (
     {
-        email : {
+        email: {
             type: String,
             required: true,
         },
@@ -26,7 +26,7 @@ const UserSchema: Schema<Iuser> = new Schema<Iuser> (
         },
         likes: {
             type: Schema.Types.ObjectId,
-            ref: "Place",
+            ref: 'Place',
             required: false,
         },
         role: {
@@ -37,7 +37,7 @@ const UserSchema: Schema<Iuser> = new Schema<Iuser> (
         },
         isDeleted: {
             type: Boolean,
-            required: false,
+            default: false,
         },
         
     },
@@ -46,4 +46,4 @@ const UserSchema: Schema<Iuser> = new Schema<Iuser> (
     }
 )
 
-export default model<Iuser>('User', UserSchema)
+export default model<IUser>('User', UserSchema)
