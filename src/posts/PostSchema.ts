@@ -6,7 +6,7 @@ export interface IPost extends Document {
     title: string;
     contents: string;
     // contentImage: ;
-    comments: Schema.Types.ObjectId;
+    comments: Schema.Types.ObjectId[];
 }
 
 // PostSchema
@@ -32,7 +32,7 @@ const PostSchema = new Schema<IPost> (
         },
         // contentImage: {},
         comments: {
-            type: Schema.Types.ObjectId,
+            type: [Schema.Types.ObjectId],
             ref: 'Comment',
             required: false,
         }
