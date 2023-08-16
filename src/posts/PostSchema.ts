@@ -14,7 +14,7 @@ const PostSchema = new Schema<IPost> (
     {
         subject: {
             type: String,
-            enum: ['후기', '질문', '투표'],
+            enum: ['후기', '질문'],
             required: false,
         },
         user: {
