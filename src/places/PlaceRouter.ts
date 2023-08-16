@@ -16,6 +16,9 @@ placeRouter.get(
 // 숙소 상세 조회
 placeRouter.get('/places/:placeId', placeController.getPlacesById);
 
+/// 전체 숙소 조회
+placeRouter.get('/places/all', placeController.getTotalPlaces);
+
 // 회원 구분 미들웨어 필요
 // [회원] 숙소 좋아요
 placeRouter.post('/places/likes', placeController.likePlace);
@@ -24,9 +27,6 @@ placeRouter.post('/places/likes', placeController.likePlace);
 placeRouter.delete('/places/likes', placeController.unlikePlace);
 
 // 관리자 구분 미들웨어 필요
-// [관리자] 전체 숙소 조회
-placeRouter.get('/admin/places', placeController.getTotalPlaces);
-
 // [관리자] 숙소 등록
 placeRouter.patch('/admin/places', placeController.createPlace);
 
