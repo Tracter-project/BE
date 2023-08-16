@@ -1,8 +1,7 @@
-import express from "express";
-import UserController from './UserController';
+import { Router } from "express";
+import userController from './UserController';
 
-const userRouter = express.Router();
-const userController = new UserController;
+const userRouter = Router();
  
 // 회원가입
 userRouter.post('/users', userController.registeUser);

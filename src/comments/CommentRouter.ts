@@ -1,8 +1,7 @@
-import express from 'express';
-import CommentController from './CommentController';
+import { Router } from 'express';
+import commentController from './CommentController';
 
-const commentRouter = express.Router();
-const commentController = new CommentController;
+const commentRouter = Router();
 
 // 댓글 등록
 commentRouter.post(commentController.registComment);

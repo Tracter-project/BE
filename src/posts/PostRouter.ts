@@ -1,8 +1,7 @@
-import express from "express";
-import PostController from "./PostController";
+import { Router } from "express";
+import postController from "./PostController";
 
-const postRouter = express.Router();
-const postController = new PostController;
+const postRouter = Router();
 
 // 게시글 목록 조회
 postRouter.get('/posts',postController.listPost);
