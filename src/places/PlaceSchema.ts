@@ -6,7 +6,7 @@ export interface IPlace extends Document {
 	description: string;
 	category: Schema.Types.ObjectId;
 	region: '서울' | '강원-강릉' | '전라-여수' | '경상-부산' | '제주';
-	likeCount: number;
+	placeLikeCount: number;
 	bannerImage: string;
 	mainImage: string;
 	detailImage: string[];
@@ -37,9 +37,9 @@ const PlaceSchema = new Schema<IPlace>(
 			enum: ['서울', '강원-강릉', '전라-여수', '경상-부산', '제주'],
 			default: '서울',
 		},
-		likeCount: {
+		placeLikeCount: {
 			type: Number,
-			required: false,
+			default: 0,
 		},
 		bannerImage: {
 			type: String,
