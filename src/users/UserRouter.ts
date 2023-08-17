@@ -6,9 +6,9 @@ const userRouter = Router();
 // 회원가입
 userRouter.post('/users', userController.registeUser);
 // 회원 정보 조회
-userRouter.get('/users', userController.openProfile);
+userRouter.get('/users', userController.getUserInformation);
 // 로그인
-userRouter.post('/login', userController.login);
+userRouter.post('/login', userController.userLogin);
 // 회원 정보 수정
 userRouter.patch('/users', userController.updateProfile);
 // 이메일 중복 체크
