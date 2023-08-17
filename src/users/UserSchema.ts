@@ -4,7 +4,8 @@ export interface IUser extends Document {
 	email: string;
 	nickname: string;
 	password: string;
-	likes: Schema.Types.ObjectId;
+	likedPlaces: Schema.Types.ObjectId[];
+	likedPosts: Schema.Types.ObjectId[];
 	role: string;
 	isDeleted: boolean;
 }
@@ -24,10 +25,13 @@ const UserSchema = new Schema<IUser>(
 			type: String,
 			required: true,
 		},
-		likes: {
-			type: Schema.Types.ObjectId,
+		likedPlaces: {
+			type: [Schema.Types.ObjectId],
 			ref: 'Place',
-			required: false,
+		},
+		likedPosts: {
+			type: [Schema.Types.ObjectId],
+			ref: 'Post',
 		},
 		role: {
 			type: String,
