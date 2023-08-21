@@ -28,6 +28,7 @@
 		"express-validator": "^7.0.1",
 		"mongodb": "^5.7.0",
 		"mongoose": "^7.4.3",
+		"nunjucks": "^3.2.4",
 		"passport": "^0.6.0",
 		"passport-kakao": "^1.0.1",
 		"passport-local": "^1.0.0"
