@@ -15,3 +15,15 @@ export const connectDB = () => {
 	});
 	db.on('reconnectedFailed', () => console.error('reconnect failed'));
 };
+
+// import { Sequelize } from 'sequelize';
+// import deotenv from 'dotenv';
+
+// deotenv.config();
+
+// export const connectDB = new Sequelize({
+// 	host: process.env.DB_HOST,
+// 	username: process.env.DB_USER,
+// 	password: process.env.DB_PASSWORD,
+// 	database: process.env.DB_NAME,
+// });
