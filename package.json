@@ -12,7 +12,8 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "npx ts-node app.ts",
-		"dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" app.ts"
+		"dev": "nodemon --watch \"*.ts\" --exec \"ts-node\" app.ts",
+		"typeorm": "typeorm"
 	},
 	"dependencies": {
 		"@types/bcrypt": "^5.0.0",
@@ -28,12 +29,14 @@
 		"express-validator": "^7.0.1",
 		"mongodb": "^5.7.0",
 		"mongoose": "^7.4.3",
+		"mysql": "^2.18.1",
 		"mysql2": "^3.6.0",
 		"nunjucks": "^3.2.4",
 		"passport": "^0.6.0",
-		"passport-kakao": "^1.0.1",
 		"passport-local": "^1.0.0",
-		"sequelize": "^6.32.1"
+		"reflect-metadata": "^0.1.13",
+		"sequelize": "^6.32.1",
+		"typeorm": "^0.3.17"
 	},
 	"devDependencies": {
 		"@types/cors": "^2.8.13",

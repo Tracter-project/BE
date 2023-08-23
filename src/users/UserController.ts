@@ -109,7 +109,6 @@ export const userController = {
 	},
 	withdrawUser: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			// 이부분 확인 좀... 몽고스에서는 _id가 부여되서 그값으로 넘기는데, mysql은 몰루?
 			const { _id }: IUser = req.body;
 			await userService.deleteUser(_id);
 

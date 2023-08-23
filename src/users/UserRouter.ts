@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { auth } from '../middlewares/auth';
 import { userController } from './UserController';
 
 export const userRouter: Router = Router();
@@ -10,7 +11,7 @@ userRouter.get('/users', userController.getUserInformation);
 // 로그인
 userRouter.post('/login', userController.userLogin);
 // 회원 정보 수정
-userRouter.patch('/users', userController.updateProfile);
+userRouter.patch('/users', auth, userController.updateProfile);
 // 이메일 중복 체크
 userRouter.get('/users/validator/email', userController.validatorEmail);
 // 닉네임 중복 체크
