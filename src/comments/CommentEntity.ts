@@ -8,37 +8,24 @@ import {
 	JoinColumn,
 	ManyToOne,
 } from 'typeorm';
-import { PostEntity } from '../posts/PostEntity';
-import { UserEntity } from '../users/UserEntity';
+import { Post } from '../posts/PostEntity';
+import { User } from '../users/UserEntity';
 
-@Entity()
-export class CommentEntity {
+@Entity('comments')
+export class Comment {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ nullable: false })
-	@ManyToOne(() => PostEntity)
+	@Column('int', { nullable: false })
+	@ManyToOne(() => Post)
 	@JoinColumn({ name: 'post_id' })
 	postId: number;
 
-	@Column({ nullable: false })
-	@OneToOne(() => UserEntity)
+	@Column('int', { nullable: false })
+	@OneToOne(() => User)
 	@JoinColumn({ name: 'user_id' })
 	writer: number;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	comment: string;
-
-	// @CreateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// })
-	// createdAt: Date;
-
-	// @UpdateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// 	onUpdate: 'CURRENT_TIMESTAMP()',
-	// })
-	// updatedAt: Date;
 }

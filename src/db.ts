@@ -17,9 +17,9 @@
 // };
 
 // import { Sequelize } from 'sequelize';
-// import deotenv from 'dotenv';
+// import dotenv from 'dotenv';
 
-// deotenv.config();
+// dotenv.config();
 
 // export const connectDB = new Sequelize({
 // 	dialect: 'mysql',
@@ -31,14 +31,14 @@
 
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { UserEntity } from './users/UserEntity';
-import { PlaceEntity } from './places/PlaceEntity';
-import { PostEntity } from './posts/PostEntity';
-import { CategoryEntity } from './categories/CategoryEntity';
-import { CommentEntity } from './comments/CommentEntity';
-import deotenv from 'dotenv';
+import { User } from './users/UserEntity';
+import { Place } from './places/PlaceEntity';
+import { Post } from './posts/PostEntity';
+import { Comment } from './comments/CommentEntity';
+import { Category } from './categories/CategoryEntity';
+import dotenv from 'dotenv';
 
-deotenv.config();
+dotenv.config();
 
 export const connectDB = new DataSource({
 	type: 'mysql',
@@ -46,13 +46,7 @@ export const connectDB = new DataSource({
 	username: process.env.DB_USER,
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_NAME,
-	entities: [
-		UserEntity,
-		PlaceEntity,
-		PostEntity,
-		CommentEntity,
-		CategoryEntity,
-	],
+	entities: [User, Place, Post, Comment, Category],
 	synchronize: true,
 	logging: ['warn', 'error'],
 	migrations: [],

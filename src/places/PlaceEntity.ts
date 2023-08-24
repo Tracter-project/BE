@@ -7,68 +7,54 @@ import {
 	ManyToOne,
 	JoinColumn,
 } from 'typeorm';
-import { CategoryEntity } from '../categories/CategoryEntity';
+import { Category } from '../categories/CategoryEntity';
 
-enum region {
-	seoul = '서울',
-	gangwon = '강원-강릉',
-	jeolla = '전라-여수',
-	Gyeongsang = '경상-부산',
-	jeju = '제주',
+enum RegionEnum {
+	SEOUL = '서울',
+	GANGWON = '강원-강릉',
+	JEOLLA = '전라-여수',
+	GYEONGSANG = '경상-부산',
+	JEJU = '제주',
 }
 
-@Entity()
-export class PlaceEntity {
+@Entity('places')
+export class Place {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	placeName: string;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	price: string;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	description: string;
 
-	@Column({ nullable: false })
-	@ManyToOne(() => CategoryEntity)
+	@Column('varchar', { nullable: false })
+	@ManyToOne(() => Category)
 	@JoinColumn({ name: 'categoryId' })
-	category: CategoryEntity;
+	category: Category;
 
-	@Column({
-		type: 'enum',
-		enum: region,
-		default: region.seoul,
+	@Column('enum', {
+		enum: RegionEnum,
+		default: RegionEnum.SEOUL,
 		nullable: false,
 	})
-	region: region;
+	region: RegionEnum;
 
-	@Column({ default: 0 })
+	@Column('int', { default: 0 })
 	placeLikeCount: number;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	bannerImage: string;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	mainImage: string;
 
 	@Column('simple-array', { nullable: false })
 	detailImage: string[];
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	bookingURL: string;
-
-	// @CreateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// })
-	// createdAt: Date;
-
-	// @UpdateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// 	onUpdate: 'CURRENT_TIMESTAMP()',
-	// })
-	// updatedAt: Date;
 }

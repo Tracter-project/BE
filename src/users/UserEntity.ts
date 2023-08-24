@@ -3,62 +3,52 @@ import {
 	PrimaryGeneratedColumn,
 	Column,
 	OneToMany,
+	JoinColumn,
 	CreateDateColumn,
 	UpdateDateColumn,
-	JoinColumn,
+	ManyToMany,
 } from 'typeorm';
-import { PostEntity } from '../posts/PostEntity';
-import { PlaceEntity } from '../places/PlaceEntity';
 
-enum role {
-	admin = 'admin',
-	member = 'member',
+import { Post } from '../posts/PostEntity';
+import { Place } from '../places/PlaceEntity';
+import { Base } from '../BaseEntity';
+
+enum roleEnum {
+	ADMIN = 'admin',
+	MEMBER = 'member',
 }
 
-@Entity()
-export class UserEntity {
-	@PrimaryGeneratedColumn()
-	id: number;
-
-	@Column({ nullable: false })
+@Entity('users')
+export class User extends Base {
+	@Column('varchar', { nullable: false })
 	email: string;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	nickname: string;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	password: string;
 
-	@Column('simple-array')
-	@OneToMany(() => PlaceEntity, place => place.id)
+	// manytomnay -> like테이블 만들기
+	@Column('simple-array', { nullable: true })
+	@ManyToMany(() => Place, place => place.id)
 	@JoinColumn({ name: 'place_id' })
-	likedPlaces: PlaceEntity[];
+	likedPlaces: Place[];
 
-	@Column('simple-array')
-	@OneToMany(() => PostEntity, post => post.id)
-	@JoinColumn({ name: 'post_id' })
-	likedPosts: PostEntity[];
+	@Column('simple-array', { nullable: true })
+	@ManyToMany(() => Post, post => post.id)
+	@JoinColumn({ name: 'id' })
+	likedPosts: Post[];
 
-	@Column({
-		type: 'enum',
-		enum: role,
-		default: role.member,
+	@Column('enum', {
+		enum: roleEnum,
+		default: roleEnum.MEMBER,
 	})
-	role: role;
+	role: roleEnum;
 
 	@Column({ default: false })
 	isDeleted: boolean;
 
-	// @CreateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// })
-	// createdAt: Date;
-
-	// @UpdateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// 	onUpdate: 'CURRENT_TIMESTAMP()',
-	// })
-	// updatedAt: Date;
+	@Column('varchar', { nullable: true })
+	token: string;
 }

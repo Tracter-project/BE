@@ -4,33 +4,31 @@ import {
 	Column,
 	OneToMany,
 	OneToOne,
-	CreateDateColumn,
-	UpdateDateColumn,
 	JoinColumn,
 } from 'typeorm';
 
-import { UserEntity } from '../users/UserEntity';
-import { CommentEntity } from '../comments/CommentEntity';
+import { User } from '../users/UserEntity';
+import { Comment } from '../comments/CommentEntity';
 
-enum subject {
-	review = '후기',
-	question = '질문',
-	etc = '기타',
+enum subjectEnum {
+	REVIEW = '후기',
+	QUESTION = '질문',
+	ETC = '기타',
 }
 
-@Entity()
-export class PostEntity {
+@Entity('posts')
+export class Post {
 	@PrimaryGeneratedColumn()
 	id: number;
 
 	@Column({
 		type: 'enum',
-		enum: subject,
+		enum: subjectEnum,
 	})
-	subject: subject;
+	subject: subjectEnum;
 
 	@Column({ nullable: false })
-	@OneToOne(() => UserEntity, user => user.id)
+	@OneToOne(() => User, user => user.id)
 	@JoinColumn({ name: 'user_id' })
 	writer: number;
 
@@ -44,20 +42,7 @@ export class PostEntity {
 	postLikeCount: number;
 
 	@Column('simple-array')
-	@OneToMany(() => CommentEntity, comment => comment.id)
+	@OneToMany(() => Comment, comment => comment.id)
 	@JoinColumn({ name: 'comment_id' })
-	comments: CommentEntity[];
-
-	// @CreateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// })
-	// createdAt: Date;
-
-	// @UpdateDateColumn({
-	// 	type: 'datetime',
-	// 	default: () => 'CURRENT_TIMESTAMP()',
-	// 	onUpdate: 'CURRENT_TIMESTAMP()',
-	// })
-	// updatedAt: Date;
+	comments: string[];
 }

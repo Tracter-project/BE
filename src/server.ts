@@ -19,4 +19,4 @@ server.use(express.urlencoded({ extended: false }));
 server.use(express.json());
 
 // Router 사용
-server.use('/api', router);
+server.use(router);

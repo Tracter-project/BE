@@ -1,12 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
+import { server } from './src/server';
 import { connectDB } from './src/db';
 import dotenv from 'dotenv';
+import { router } from './src/router';
 
-const app = express();
 dotenv.config();
-
-app.use(express.urlencoded({ extended: false })); // Content-Type: application/x-www-form-urlencoded 형태의 데이터를 인식하고 핸들링할 수 있게 함
-app.use(express.json()); // Content-Type: application/json 형태의 데이터를 인식하고 핸들링할 수 있게 함
 
 // DB 연결 mongoose 사용시
 // connectDB();
@@ -31,9 +29,9 @@ connectDB
 	});
 
 // PORT
-const port: string = process.env.PORT as string;
+const port = process.env.PORT;
 
 // run sever
-app.listen(port, () => {
+server.listen(port, () => {
 	console.log(`Server listening on ${port}`);
 });
