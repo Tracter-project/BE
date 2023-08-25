@@ -13,7 +13,7 @@ export const userController = {
 					.json({ message: 'registeUser:누락된 값이 있습니다.' });
 			}
 
-			await userService.createUser(email, nickname, password);
+			await userService.createUser(email, password, nickname);
 			return res
 				.status(201)
 				.json({ message: 'registeUser:회원 가입이 완료되었습니다.' });
@@ -116,4 +116,48 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// likePlace: async (req: Request, res: Response): Promise<Response> => {
+	// 	try {
+	// 		const { email }: User = req.body;
+
+	// 		await userService.likePlace(email);
+	// 		return res.status(200).json({ message: ': 장소 좋아요에 성공했습니다.' });
+	// 	} catch (error) {
+	// 		return res.status(500).json({ error: error.message });
+	// 	}
+	// },
+	// unlikePlace: async (req: Request, res: Response): Promise<Response> => {
+	// 	try {
+	// 		const { email }: User = req.body;
+
+	// 		await userService.unlikePlace(email);
+	// 		return res
+	// 			.status(200)
+	// 			.json({ message: ': 장소 좋아요 취소에 성공했습니다.' });
+	// 	} catch (error) {
+	// 		return res.status(500).json({ error: error.message });
+	// 	}
+	// },
+	// likePost: async (req: Request, res: Response): Promise<Response> => {
+	// 	try {
+	// 		const { email }: User = req.body;
+
+	// 		await userService.likePost(email);
+	// 		return res.status(200).json({ message: ': 글 좋아요에 성공했습니다.' });
+	// 	} catch (error) {
+	// 		return res.status(500).json({ error: error.message });
+	// 	}
+	// },
+	// unlikePost: async (req: Request, res: Response): Promise<Response> => {
+	// 	try {
+	// 		const { email }: User = req.body;
+
+	// 		await userService.unlikePost(email);
+	// 		return res
+	// 			.status(200)
+	// 			.json({ message: ': 글 좋아요 취소에 성공했습니다.' });
+	// 	} catch (error) {
+	// 		return res.status(500).json({ error: error.message });
+	// 	}
+	// },
 };

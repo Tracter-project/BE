@@ -18,3 +18,12 @@ userRouter.get('/users/validator/email', userController.validatorEmail);
 userRouter.get('/users/validator/nickname', userController.validatorNickname);
 // 회원 탈퇴
 userRouter.delete('/users', userController.withdrawUser);
+
+// 좋아요(place)
+// userRouter.post('/users/like/place', userController.likePlace);
+// 좋아요 취소(place)
+// userRouter.patch('/users/like/place', userController.unlikePlace);
+// // 좋아요(post)
+// userRouter.post('/users/like/post', userController.likePost);
+// // 좋아요 취소(post)
+// userRouter.patch('/users/like/post', userController.unlikePost);

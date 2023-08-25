@@ -6,10 +6,7 @@ import { router } from './src/router';
 
 dotenv.config();
 
-// DB 연결 mongoose 사용시
-// connectDB();
-
-// DB 연결 mysql 사용시
+// DB 연결 방법(mysql 사용)
 // 1. mysql.server start 실행후 서버 실행해야함
 // 2. CREATE DATABASE tracter로 DB 만들기 (처음에 한번만 작성)
 // 3. .env 파일 꼭확인하기 - 아래는 .env안에 들어갈 파일입니다!

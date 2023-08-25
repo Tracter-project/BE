@@ -24,33 +24,25 @@ export const userService = {
 		password: string,
 		nickname: string
 	): Promise<User> => {
-		console.log(1);
 		try {
 			const isDuplicateEmail: boolean = await userService.isDuplicateEmail(
 				email
 			);
 			const isDuplicateNickname: boolean =
 				await userService.isDuplicateNickname(nickname);
-			console.log(2);
 			// const token: string = await userService.createToken(token);
 			if (isDuplicateEmail) {
 				throw new Error('createUser: 이미 사용 중인 이메일 입니다.');
 			}
-			console.log(6);
-			console.log(isDuplicateEmail);
 			if (isDuplicateNickname) {
-				console.log(7);
 				throw new Error('createUser: 이미 사용 중인 닉네임입니다.');
 			}
-			console.log(3);
-			const hashedPassword: string = await bcrypt.hash(password, 5);
-			console.log(4);
+			const hashedPassword: string = await bcrypt.hash(password, 10);
 			const newUser: User = new User();
 			newUser.email = email;
 			newUser.password = hashedPassword;
 			newUser.nickname = nickname;
 			// newUser.token = token;
-			console.log(5);
 			return newUser.save();
 		} catch (error) {
 			throw new Error('createUser: 회원가입에 실패했습니다.');
@@ -86,11 +78,12 @@ export const userService = {
 		if (!user) {
 			throw new Error('login: 입력하신 이메일은 회원가입되어 있지 않습니다.');
 		}
-
-		const isValidPassword = await bcrypt.compare(password, user.password);
-		console.log(
-			`isValidPassword: ${isValidPassword}, password: ${password}, user.password:${user.password}`
+		const hashPasswrod = await bcrypt.hash(password, 10);
+		const isValidPassword = await bcrypt.compareSync(
+			password,
+			String(user.password).trim()
 		);
+
 		if (!isValidPassword) {
 			throw new Error('login: 비밀번호가 일치하지 않습니다.');
 		}
@@ -125,10 +118,7 @@ export const userService = {
 			if (!user) {
 				throw new Error('updateUser: 사용자를 찾을 수 없습니다.');
 			}
-			console.log(password, user.password);
 			const isValidPassword = await bcrypt.compare(password, user.password);
-			// const isValidPassword = true;
-			// 이럼 비밀번호가 틀릴경우 업데이트가 진행되지 않으려고 하는데 password를 2개를 받아야하나?
 			if (!isValidPassword) {
 				throw new Error(
 					'updateUser: 비밀번호가 일치하지 않아 회원정보를 업데이트할 수 없습니다.'
@@ -139,15 +129,13 @@ export const userService = {
 				const isDuplicateNickname = await userService.getUserByNickname(
 					nickname
 				);
-
 				if (isDuplicateNickname) {
 					throw new Error('updateUser: 사용 중인 닉네임입니다.');
 				}
 			}
-
 			user.nickname = nickname;
+			const hashedPassword: string = await bcrypt.hash(updatePassword, 10);
 
-			const hashedPassword: string = await bcrypt.hash(updatePassword, 5);
 			user.password = hashedPassword;
 
 			return User.update(
@@ -155,7 +143,6 @@ export const userService = {
 				{ nickname: user.nickname, password: user.password }
 			);
 		} catch (error) {
-			console.log(error);
 			throw new Error('updateUser: 회원 정보 업데이트에 실패했습니다.');
 		}
 	},
@@ -168,4 +155,42 @@ export const userService = {
 			throw new Error('deleteUser: 회원탈퇴에 실패했습니다.');
 		}
 	},
+
+	// 장소_좋아요하기
+	// likePlace: async (email: string): Promise<void> => {
+	// 	try {
+	// 		const user = await userService.getUserByEmail(email);
+
+	// 		if (!user) {
+	// 			throw new Error('likePlace: 사용자를 찾을 수 없습니다.');
+	// 		}
+
+	// 		const likedPlaceIds = user.likedPlaces.map(place => place.id);
+	// 			throw new Error('likePlace: 이미 좋아요가 되어 있는 사용자입니다.');
+	// 		}
+	// 	} catch (error) {
+	// 		throw new Error('likePlace: 장소에 좋아요가 실패했습니다.');
+	// 	}
+	// },
+	// // 장소_좋아요 취소하기
+	// unlikePlace: async (email: string): Promise<void> => {
+	// 	try {
+	// 	} catch (error) {
+	// 		throw new Error('unlikePlace: 장소에 좋아요 취소가 실패했습니다.');
+	// 	}
+	// },
+	// // 글_좋아요하기
+	// likePost: async (email: string): Promise<void> => {
+	// 	try {
+	// 	} catch (error) {
+	// 		throw new Error('likePost: 글의 좋아요가 실패했습니다.');
+	// 	}
+	// },
+	// // 글_좋아요 취소하기
+	// unlikePost: async (email: string): Promise<void> => {
+	// 	try {
+	// 	} catch (error) {
+	// 		throw new Error('unlikePost: 글의 좋아요 취소가 실패했습니다.');
+	// 	}
+	// },
 };

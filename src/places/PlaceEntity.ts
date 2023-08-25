@@ -1,13 +1,7 @@
-import {
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	CreateDateColumn,
-	UpdateDateColumn,
-	ManyToOne,
-	JoinColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Category } from '../categories/CategoryEntity';
+import { User } from '../users/UserEntity';
+import { Base } from '../entities/BaseEntity';
 
 enum RegionEnum {
 	SEOUL = '서울',
@@ -18,10 +12,7 @@ enum RegionEnum {
 }
 
 @Entity('places')
-export class Place {
-	@PrimaryGeneratedColumn()
-	id: number;
-
+export class Place extends Base {
 	@Column('varchar', { nullable: false })
 	placeName: string;
 
@@ -57,4 +48,17 @@ export class Place {
 
 	@Column('varchar', { nullable: false })
 	bookingURL: string;
+
+	// @Column('simple-array', { nullable: true })
+	// @ManyToMany(() => User)
+	// @JoinTable({
+	// 	name: 'likes',
+	// 	joinColumn: {
+	// 		name: 'place_id',
+	// 	},
+	// 	inverseJoinColumn: {
+	// 		name: 'user_id',
+	// 	},
+	// })
+	// usersWholikedPlace: User[];
 }

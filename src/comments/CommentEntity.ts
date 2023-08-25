@@ -1,21 +1,10 @@
-import {
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	OneToOne,
-	CreateDateColumn,
-	UpdateDateColumn,
-	JoinColumn,
-	ManyToOne,
-} from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
 import { Post } from '../posts/PostEntity';
 import { User } from '../users/UserEntity';
+import { Base } from '../entities/BaseEntity';
 
 @Entity('comments')
-export class Comment {
-	@PrimaryGeneratedColumn()
-	id: number;
-
+export class Comment extends Base {
 	@Column('int', { nullable: false })
 	@ManyToOne(() => Post)
 	@JoinColumn({ name: 'post_id' })
