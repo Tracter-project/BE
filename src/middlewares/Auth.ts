@@ -1,6 +1,15 @@
 import { userService } from '../users/UserService';
 
-export const adminAuth = {
+export const Auth = {
+	isUser: async (token: string): Promise<string> => {
+		const user = await userService.getUserByToken(token);
+
+		if (!user) {
+			throw new Error('인증되지 않은 사용자입니다.');
+		}
+		return user.role;
+	},
+
 	isAdmin: async (email: string): Promise<boolean> => {
 		const user = await userService.getUserByEmail(email);
 

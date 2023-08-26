@@ -1,7 +1,7 @@
 // import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 // import { User } from '../users/UserEntity';
 // import { Place } from '../places/PlaceEntity';
-// import { Post } from '../posts/PostEntity';
+// import { Article } from '../articles/ArticleEntity';
 // import { Base } from './BaseEntity';
 
 // @Entity('likes')

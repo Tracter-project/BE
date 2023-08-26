@@ -27,7 +27,6 @@ export const userService = {
 			);
 			const isDuplicateNickname: boolean =
 				await userService.isDuplicateNickname(nickname);
-			// const token: string = await userService.createToken(token);
 			if (isDuplicateEmail) {
 				throw new Error('createUser: 이미 사용 중인 이메일 입니다.');
 			}
@@ -39,7 +38,6 @@ export const userService = {
 			newUser.email = email;
 			newUser.password = hashedPassword;
 			newUser.nickname = nickname;
-			// newUser.token = token;
 			return newUser.save();
 		} catch (error) {
 			throw new Error('createUser: 회원가입에 실패했습니다.');
@@ -73,7 +71,6 @@ export const userService = {
 		if (!user) {
 			throw new Error('login: 입력하신 이메일은 회원가입되어 있지 않습니다.');
 		}
-		const hashPasswrod = await bcrypt.hash(password, 10);
 		const isValidPassword = await bcrypt.compareSync(
 			password,
 			String(user.password).trim()
@@ -98,6 +95,11 @@ export const userService = {
 	getUserByNickname: async (nickname: string): Promise<User | null> => {
 		return await User.findOne({ where: { nickname } });
 	},
+	// 토큰 검색
+	getUserByToken: async (token: string): Promise<User | null> => {
+		return await User.findOne({ where: { token } });
+	},
+
 	// 회원 정보 수정
 	updateUser: async (
 		email: string,
@@ -172,17 +174,17 @@ export const userService = {
 	// 	}
 	// },
 	// // 글_좋아요
-	// likePost: async (email: string): Promise<void> => {
+	// likeArticle: async (email: string): Promise<void> => {
 	// 	try {
 	// 	} catch (error) {
-	// 		throw new Error('likePost: 글의 좋아요가 실패했습니다.');
+	// 		throw new Error('likeArticle: 글의 좋아요가 실패했습니다.');
 	// 	}
 	// },
 	// // 글_좋아요 취소
-	// unlikePost: async (email: string): Promise<void> => {
+	// unlikeArticle: async (email: string): Promise<void> => {
 	// 	try {
 	// 	} catch (error) {
-	// 		throw new Error('unlikePost: 글의 좋아요 취소가 실패했습니다.');
+	// 		throw new Error('unlikeArticle: 글의 좋아요 취소가 실패했습니다.');
 	// 	}
 	// },
 };

@@ -1,18 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
-import { adminAuth } from './adminAuth';
+import { Auth } from './Auth';
 
 export const isAdminMiddleware = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
-): Promise<void> => {
-	const { email } = req.body; // 가정: 토큰에서 추출한 사용자 이메일 정보
-
+): Promise<any> => {
+	const { email } = req.body;
 	try {
-		const isAdmin = await adminAuth.isAdmin(email);
+		const isAdmin = await Auth.isAdmin(email);
 
 		if (!isAdmin) {
-			res.status(403).json({
+			//
+			return res.status(403).json({
 				message: '관리자만 접근할 수 있는 기능입니다.',
 			});
 		}

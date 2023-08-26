@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { tokenAuth } from '../middlewares/tokenAuth';
+import { tokenAuth } from '../middlewares/tokenAuthMiddleWare';
 import { userController } from './UserController';
 
 export const userRouter: Router = Router();
@@ -23,7 +23,7 @@ userRouter.delete('/users', userController.withdrawUser);
 // userRouter.post('/users/like/place', userController.likePlace);
 // 좋아요 취소(place)
 // userRouter.patch('/users/like/place', userController.unlikePlace);
-// // 좋아요(post)
-// userRouter.post('/users/like/post', userController.likePost);
-// // 좋아요 취소(post)
-// userRouter.patch('/users/like/post', userController.unlikePost);
+// // 좋아요(article)
+// userRouter.article('/users/like/article', userController.likeArticle);
+// // 좋아요 취소(article)
+// userRouter.patch('/users/like/article', userController.unlikeArticle);

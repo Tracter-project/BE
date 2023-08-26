@@ -7,8 +7,8 @@ export const categoryService = {
 		return (await Category.findOne({ where: { categoryName } })) ? true : false;
 	},
 	// 카테고리 검색
-	getCategoryName: async (categoryName: string): Promise<Category | null> => {
-		return await Category.findOne({ where: { categoryName } });
+	getCategoryById: async (id: number): Promise<Category | null> => {
+		return await Category.findOne({ where: { id } });
 	},
 	// 카테고리 전체 조회
 	getAllCategoryName: async (): Promise<Category[]> => {
@@ -34,11 +34,11 @@ export const categoryService = {
 	},
 	// 카테고리 수정
 	updateCategory: async (
-		categoryName: string,
+		id: number,
 		updateCategoryName: string
 	): Promise<UpdateResult> => {
 		try {
-			const category = await categoryService.getCategoryName(categoryName);
+			const category = await categoryService.getCategoryById(id);
 
 			if (!category) {
 				throw new Error('updateCategory: 카테고리를 찾을 수 없습니다.');
@@ -52,10 +52,7 @@ export const categoryService = {
 				}
 				category.categoryName = updateCategoryName;
 
-				return Category.update(
-					{ categoryName: categoryName },
-					{ categoryName: updateCategoryName }
-				);
+				return Category.update({ id }, { categoryName: updateCategoryName });
 			}
 			throw new Error('updateCategory: 동일한 카테고리 이름입니다.');
 		} catch (error) {
@@ -63,9 +60,9 @@ export const categoryService = {
 		}
 	},
 	// 카테고리 삭제
-	deleteCategory: async (categoryName: string): Promise<DeleteResult> => {
+	deleteCategory: async (id: number): Promise<DeleteResult> => {
 		try {
-			const deleteResult = await Category.delete({ categoryName });
+			const deleteResult = await Category.delete({ id });
 
 			if (deleteResult.affected === 0) {
 				throw new Error('deleteCategory: 삭제할 카테고리가 존재하지 않습니다.');
