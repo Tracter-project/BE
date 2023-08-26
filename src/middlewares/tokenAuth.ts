@@ -4,7 +4,11 @@ import { Request, Response, NextFunction } from 'express';
 
 dotenv.config();
 
-export function auth(req: Request, res: Response, next: NextFunction): void {
+export function tokenAuth(
+	req: Request,
+	res: Response,
+	next: NextFunction
+): void {
 	const token = req.headers['authorization'];
 	try {
 		if (!token) {

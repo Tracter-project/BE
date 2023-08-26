@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { commentService } from './CommentService';
-import { IComment } from './CommentSchema';
+import { Comment } from './CommentEntity';
 
 export const commentController = {
 	registComment: async (req: Request, res: Response): Promise<void> => {},

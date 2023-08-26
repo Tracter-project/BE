@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { auth } from '../middlewares/tokenAuth';
+import { tokenAuth } from '../middlewares/tokenAuth';
 import { userController } from './UserController';
 
 export const userRouter: Router = Router();
