@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { userService } from './UserService';
-import { User } from './UserEntity';
 
 export const userController = {
+	// 회원 가입
 	registeUser: async (req: Request, res: Response): Promise<Response> => {
-		const { email, password, nickname }: User = req.body;
+		const { email, password, nickname } = req.body;
 
 		try {
 			if (!email || !password || !nickname) {
@@ -21,6 +21,7 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 회원 정보 조회
 	getUserInformation: async (
 		req: Request,
 		res: Response
@@ -39,9 +40,10 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 로그인
 	userLogin: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email, password }: User = req.body;
+			const { email, password } = req.body;
 
 			const token = await userService.login(email, password);
 
@@ -52,6 +54,7 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 회원 정보 수정
 	updateProfile: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const { email, nickname, password, updatePassword } = req.body;
@@ -60,14 +63,15 @@ export const userController = {
 
 			return res
 				.status(200)
-				.json({ message: 'updateProfile: 회원정보 수정에 성공했습니다.' });
+				.json({ message: 'updateProfile: 회원 정보 수정에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 이메일 중복 검사
 	validatorEmail: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email }: User = req.body;
+			const { email } = req.body;
 			const isDuplicateEmail = await userService.getUserByEmail(email);
 
 			if (isDuplicateEmail) {
@@ -82,9 +86,10 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 닉네임 중복 검사
 	validatorNickname: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { nickname }: User = req.body;
+			const { nickname } = req.body;
 			const isDuplicateNickname = await userService.getUserByNickname(nickname);
 
 			if (isDuplicateNickname) {
@@ -99,20 +104,23 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 회원 탈퇴
 	withdrawUser: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email }: User = req.body;
+			const { email } = req.body;
 
-			await userService.deleteUser(email);
+			const result = await userService.deleteUser(email);
+
+			if (result.affected === 0) {
+				return res.status(400).json({
+					message: 'withdrawUser: 삭제할 사용자가 존재하지 않습니다.',
+				});
+			}
+
 			return res
 				.status(200)
 				.json({ message: 'withdrawUser: 회원탈퇴에 성공했습니다.' });
 		} catch (error) {
-			if (error.message === '회원 탈퇴 실패') {
-				return res.status(400).json({
-					message: 'withdrawUser: 토큰이 일치하지 않아 회원탈퇴 실패했습니다.',
-				});
-			}
 			return res.status(500).json({ error: error.message });
 		}
 	},

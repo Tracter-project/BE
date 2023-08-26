@@ -1,9 +1,9 @@
-import Comment, { IComment } from './CommentSchema';
+import { Comment } from './CommentEntity';
 
 export const commentService = {
-	createComment: async (commentData: IComment) => {
+	createComment: async (commentData: Comment) => {
 		try {
-			const newComment: IComment = new Comment(commentData);
+			const newComment: Comment = new Comment();
 			return newComment.save();
 		} catch (error) {
 			throw error;
