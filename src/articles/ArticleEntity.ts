@@ -4,14 +4,14 @@ import { User } from '../users/UserEntity';
 import { Comment } from '../comments/CommentEntity';
 import { Base } from '../entities/BaseEntity';
 
-enum subjectEnum {
+export enum subjectEnum {
 	REVIEW = '후기',
 	QUESTION = '질문',
 	ETC = '기타',
 }
 
-@Entity('posts')
-export class Post extends Base {
+@Entity('articles')
+export class Article extends Base {
 	@Column({
 		type: 'enum',
 		enum: subjectEnum,
@@ -21,7 +21,7 @@ export class Post extends Base {
 	@Column({ nullable: false })
 	@OneToOne(() => User, user => user.id)
 	@JoinColumn({ name: 'user_id' })
-	writer: number;
+	writer: string;
 
 	@Column({ nullable: false })
 	title: string;
@@ -30,7 +30,7 @@ export class Post extends Base {
 	contents: string;
 
 	@Column({ default: 0 })
-	postLikeCount: number;
+	articleLikeCount: number;
 
 	@Column('simple-array')
 	@OneToMany(() => Comment, comment => comment.id)
@@ -42,11 +42,11 @@ export class Post extends Base {
 	// @JoinTable({
 	// 	name: 'likes',
 	// 	joinColumn: {
-	// 		name: 'post_id',
+	// 		name: 'article_id',
 	// 	},
 	// 	inverseJoinColumn: {
 	// 		name: 'user_id',
 	// 	},
 	// })
-	// usersWhoLikedPost: User[];
+	// usersWhoLikedArticle: User[];
 }

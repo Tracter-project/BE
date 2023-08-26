@@ -1,7 +1,7 @@
 // import { Entity, ManyToOne, JoinColumn } from 'typeorm';
 // import { User } from '../users/UserEntity';
 // import { Place } from '../places/PlaceEntity';
-// import { Post } from '../posts/PostEntity';
+// import { Article } from '../articles/ArticleEntity';
 // import { Base } from './BaseEntity';
 
 // @Entity('likes')
@@ -10,7 +10,7 @@
 // 	@JoinColumn({ name: 'user_id' })
 // 	user: User;
 
-// 	@ManyToOne(() => Post)
-// 	@JoinColumn({ name: 'post_id' })
-// 	post: Post;
+// 	@ManyToOne(() => Article)
+// 	@JoinColumn({ name: 'article_id' })
+// 	article: Article;
 // }

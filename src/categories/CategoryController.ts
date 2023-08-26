@@ -1,10 +1,14 @@
 import { Request, Response } from 'express-serve-static-core';
 import { categoryService } from './CategoryService';
-import { isAdminMiddleware } from '../middlewares/isAdminMiddleWare';
+import {
+	RegisteCategoryDTO,
+	UpdateCategoryDTO,
+	EraseCategoryDTO,
+} from './CategoryDTO';
 
 export const categoryController = {
 	// 카테고리 전체 조회
-	getCategoryNameList: async (
+	getAllCategoryName: async (
 		req: Request,
 		res: Response
 	): Promise<Response> => {
@@ -22,58 +26,57 @@ export const categoryController = {
 		}
 	},
 	// 카테고리 등록
-	registeCategoryName:
-		// [isAdminMiddleware,
-		async (req: Request, res: Response): Promise<Response> => {
-			const { categoryName } = req.body;
+	registeCategoryName: async (
+		req: Request,
+		res: Response
+	): Promise<Response> => {
+		try {
+			const { categoryName }: RegisteCategoryDTO = req.body;
 
-			try {
-				if (!categoryName) {
-					return res
-						.status(400)
-						.json({ message: 'createCategory:category 값을 없습니다.' });
-				}
-
-				await categoryService.createCategory(categoryName);
+			if (!categoryName) {
 				return res
-					.status(201)
-					.json({ message: 'createCategory: 카테고리 등록이 완료되었습니다.' });
-			} catch (error) {
-				return res.status(500).json({ error: error.message });
+					.status(400)
+					.json({ message: 'createCategory:category 값을 없습니다.' });
 			}
-		},
-	// ],
-	// 카테고리 정보 수정
-	updateCategoryName:
-		// [isAdminMiddleware,
-		async (req: Request, res: Response): Promise<Response> => {
-			try {
-				const { categoryName, updateCategoryName } = req.body;
 
-				await categoryService.updateCategory(categoryName, updateCategoryName);
+			await categoryService.createCategory(categoryName);
+			return res
+				.status(201)
+				.json({ message: 'createCategory: 카테고리 등록이 완료되었습니다.' });
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
 
-				return res.status(200).json({
-					message: 'updateCategoryName: 카테고리 정보 수정에 성공했습니다.',
-				});
-			} catch (error) {
-				return res.status(500).json({ error: error.message });
-			}
-		},
-	// ],
+	// 카테고리 수정
+	updateCategoryName: async (
+		req: Request,
+		res: Response
+	): Promise<Response> => {
+		try {
+			const { id, updateCategoryName }: UpdateCategoryDTO = req.body;
+
+			await categoryService.updateCategory(id, updateCategoryName);
+
+			return res.status(200).json({
+				message: 'updateCategoryName: 카테고리 정보 수정에 성공했습니다.',
+			});
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+
 	// 카테고리 삭제
-	eraseCategoryName:
-		// [isAdminMiddleware,
-		async (req: Request, res: Response): Promise<Response> => {
-			try {
-				const { categoryName } = req.params;
+	eraseCategoryName: async (req: Request, res: Response): Promise<Response> => {
+		try {
+			const { id }: EraseCategoryDTO = req.body;
 
-				await categoryService.deleteCategory(categoryName);
-				return res.status(200).json({
-					message: 'eraseCategoryName: 카테고리 삭제에 성공했습니다.',
-				});
-			} catch (error) {
-				return res.status(500).json({ error: error.message });
-			}
-		},
-	// ],
+			await categoryService.deleteCategory(id);
+			return res.status(200).json({
+				message: 'eraseCategoryName: 카테고리 삭제에 성공했습니다.',
+			});
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
 };

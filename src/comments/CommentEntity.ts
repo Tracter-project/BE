@@ -1,14 +1,14 @@
 import { Entity, Column, OneToOne, JoinColumn, ManyToOne } from 'typeorm';
-import { Post } from '../posts/PostEntity';
+import { Article } from '../articles/ArticleEntity';
 import { User } from '../users/UserEntity';
 import { Base } from '../entities/BaseEntity';
 
 @Entity('comments')
 export class Comment extends Base {
 	@Column('int', { nullable: false })
-	@ManyToOne(() => Post)
-	@JoinColumn({ name: 'post_id' })
-	postId: number;
+	@ManyToOne(() => Article, article => article.comments)
+	@JoinColumn({ name: 'article_id' })
+	articleId: Article;
 
 	@Column('int', { nullable: false })
 	@OneToOne(() => User)
