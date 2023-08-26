@@ -33,7 +33,7 @@ import 'reflect-metadata';
 import { DataSource } from 'typeorm';
 import { User } from './users/UserEntity';
 import { Place } from './places/PlaceEntity';
-import { Post } from './posts/PostEntity';
+import { Article } from './articles/ArticleEntity';
 import { Comment } from './comments/CommentEntity';
 import { Category } from './categories/CategoryEntity';
 import dotenv from 'dotenv';
@@ -46,7 +46,7 @@ export const connectDB = new DataSource({
 	username: process.env.DB_USER,
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_NAME,
-	entities: [User, Place, Post, Comment, Category],
+	entities: [User, Place, Article, Comment, Category],
 	synchronize: true,
 	logging: ['warn', 'error'],
 	migrations: [],

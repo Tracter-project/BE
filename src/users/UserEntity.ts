@@ -10,7 +10,7 @@ import {
 	JoinTable,
 } from 'typeorm';
 
-import { Post } from '../posts/PostEntity';
+import { Article } from '../articles/ArticleEntity';
 import { Place } from '../places/PlaceEntity';
 import { Base } from '../entities/BaseEntity';
 
@@ -36,9 +36,9 @@ export class User extends Base {
 	// likedPlaces: Place[];
 
 	// @Column('simple-array', { nullable: true })
-	// @ManyToMany(() => Post, post => post.id)
+	// @ManyToMany(() => Article, article => article.id)
 	// @JoinColumn({ name: 'id' })
-	// likedPosts: Post[];
+	// likedArticles: Article[];
 
 	@Column('enum', {
 		enum: roleEnum,
@@ -59,7 +59,7 @@ export class User extends Base {
 	// likedPlaces: Place[];
 
 	// @Column('simple-array', { nullable: true })
-	// @ManyToMany(() => Post)
+	// @ManyToMany(() => Article)
 	// @JoinTable({ name: 'likes' })
-	// likedPosts: Post[];
+	// likedArticles: Article[];
 }

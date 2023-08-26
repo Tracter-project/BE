@@ -1,10 +1,18 @@
 import { Request, Response } from 'express';
 import { userService } from './UserService';
+import {
+	RegisteUserDTO,
+	UpdateProfileDTO,
+	UserLoginDTO,
+	ValidatorEmailDTO,
+	ValidatorNicknameDTO,
+	WithdrawUserDTO,
+} from './UserDTO';
 
 export const userController = {
 	// 회원 가입
 	registeUser: async (req: Request, res: Response): Promise<Response> => {
-		const { email, password, nickname } = req.body;
+		const { email, password, nickname }: RegisteUserDTO = req.body;
 
 		try {
 			if (!email || !password || !nickname) {
@@ -43,7 +51,7 @@ export const userController = {
 	// 로그인
 	userLogin: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email, password } = req.body;
+			const { email, password }: UserLoginDTO = req.body;
 
 			const token = await userService.login(email, password);
 
@@ -57,7 +65,8 @@ export const userController = {
 	// 회원 정보 수정
 	updateProfile: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email, nickname, password, updatePassword } = req.body;
+			const { email, nickname, password, updatePassword }: UpdateProfileDTO =
+				req.body;
 
 			await userService.updateUser(email, nickname, password, updatePassword);
 
@@ -71,7 +80,7 @@ export const userController = {
 	// 이메일 중복 검사
 	validatorEmail: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email } = req.body;
+			const { email }: ValidatorEmailDTO = req.body;
 			const isDuplicateEmail = await userService.getUserByEmail(email);
 
 			if (isDuplicateEmail) {
@@ -89,7 +98,7 @@ export const userController = {
 	// 닉네임 중복 검사
 	validatorNickname: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { nickname } = req.body;
+			const { nickname }: ValidatorNicknameDTO = req.body;
 			const isDuplicateNickname = await userService.getUserByNickname(nickname);
 
 			if (isDuplicateNickname) {
@@ -107,7 +116,7 @@ export const userController = {
 	// 회원 탈퇴
 	withdrawUser: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email } = req.body;
+			const { email }: WithdrawUserDTO = req.body;
 
 			const result = await userService.deleteUser(email);
 
@@ -146,21 +155,21 @@ export const userController = {
 	// 		return res.status(500).json({ error: error.message });
 	// 	}
 	// },
-	// likePost: async (req: Request, res: Response): Promise<Response> => {
+	// likeArticle: async (req: Request, res: Response): Promise<Response> => {
 	// 	try {
 	// 		const { email }: User = req.body;
 
-	// 		await userService.likePost(email);
+	// 		await userService.likeArticle(email);
 	// 		return res.status(200).json({ message: ': 글 좋아요에 성공했습니다.' });
 	// 	} catch (error) {
 	// 		return res.status(500).json({ error: error.message });
 	// 	}
 	// },
-	// unlikePost: async (req: Request, res: Response): Promise<Response> => {
+	// unlikeArticle: async (req: Request, res: Response): Promise<Response> => {
 	// 	try {
 	// 		const { email }: User = req.body;
 
-	// 		await userService.unlikePost(email);
+	// 		await userService.unlikeArticle(email);
 	// 		return res
 	// 			.status(200)
 	// 			.json({ message: ': 글 좋아요 취소에 성공했습니다.' });
