@@ -1,4 +1,3 @@
-// import User, { IUser } from './UserSchema';
 import { User } from './UserEntity';
 import jwt from 'jsonwebtoken';
 import bcrypt, { hash } from 'bcrypt';
@@ -12,13 +11,11 @@ export const userService = {
 	isDuplicateEmail: async (email: string): Promise<boolean> => {
 		return (await User.findOne({ where: { email } })) ? true : false;
 	},
-
 	// 닉네임 중복 검사
 	isDuplicateNickname: async (nickname: string): Promise<boolean> => {
 		return (await User.findOne({ where: { nickname } })) ? true : false;
 	},
-
-	// 회원가입
+	// 회원 가입
 	createUser: async (
 		email: string,
 		password: string,
@@ -48,8 +45,7 @@ export const userService = {
 			throw new Error('createUser: 회원가입에 실패했습니다.');
 		}
 	},
-
-	// 토큰 생성하기
+	// 토큰 생성
 	createToken: async (user: User): Promise<string> => {
 		try {
 			if (typeof process.env.SECRET_KEY !== 'string') {
@@ -70,8 +66,7 @@ export const userService = {
 			throw new Error('createToken: 토큰이 생성되지 않습니다.');
 		}
 	},
-
-	//로그인
+	// 로그인
 	login: async (email: string, password: string): Promise<string> => {
 		const user = await userService.getUserByEmail(email);
 
@@ -95,17 +90,15 @@ export const userService = {
 		}
 		return token;
 	},
-
-	// Email 검색하기
+	// Email 검색
 	getUserByEmail: async (email: string): Promise<User | null> => {
 		return await User.findOne({ where: { email } });
 	},
-	// Nickname 검색하기
+	// Nickname 검색
 	getUserByNickname: async (nickname: string): Promise<User | null> => {
 		return await User.findOne({ where: { nickname } });
 	},
-
-	// 회원 정보 업데이트하기
+	// 회원 정보 수정
 	updateUser: async (
 		email: string,
 		nickname: string,
@@ -126,7 +119,7 @@ export const userService = {
 			}
 
 			if (user.nickname !== nickname) {
-				const isDuplicateNickname = await userService.getUserByNickname(
+				const isDuplicateNickname = await userService.isDuplicateNickname(
 					nickname
 				);
 				if (isDuplicateNickname) {
@@ -143,11 +136,10 @@ export const userService = {
 				{ nickname: user.nickname, password: user.password }
 			);
 		} catch (error) {
-			throw new Error('updateUser: 회원 정보 업데이트에 실패했습니다.');
+			throw new Error('updateUser: 회원 정보 수정에 실패했습니다.');
 		}
 	},
-
-	// 회원 탈퇴하기
+	// 회원 탈퇴
 	deleteUser: async (email: string): Promise<UpdateResult> => {
 		try {
 			return await User.update({ email }, { isDeleted: true });
@@ -156,7 +148,7 @@ export const userService = {
 		}
 	},
 
-	// 장소_좋아요하기
+	// 장소_좋아요
 	// likePlace: async (email: string): Promise<void> => {
 	// 	try {
 	// 		const user = await userService.getUserByEmail(email);
@@ -172,21 +164,21 @@ export const userService = {
 	// 		throw new Error('likePlace: 장소에 좋아요가 실패했습니다.');
 	// 	}
 	// },
-	// // 장소_좋아요 취소하기
+	// // 장소_좋아요 취소
 	// unlikePlace: async (email: string): Promise<void> => {
 	// 	try {
 	// 	} catch (error) {
 	// 		throw new Error('unlikePlace: 장소에 좋아요 취소가 실패했습니다.');
 	// 	}
 	// },
-	// // 글_좋아요하기
+	// // 글_좋아요
 	// likePost: async (email: string): Promise<void> => {
 	// 	try {
 	// 	} catch (error) {
 	// 		throw new Error('likePost: 글의 좋아요가 실패했습니다.');
 	// 	}
 	// },
-	// // 글_좋아요 취소하기
+	// // 글_좋아요 취소
 	// unlikePost: async (email: string): Promise<void> => {
 	// 	try {
 	// 	} catch (error) {

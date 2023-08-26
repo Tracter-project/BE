@@ -1,9 +1,9 @@
-import Post, { IPost } from './PostSchema';
+import { Post } from './PostEntity';
 
 export const postService = {
-	createPost: async (postData: IPost): Promise<IPost> => {
+	createPost: async (postData: Post): Promise<Post> => {
 		try {
-			const newPost: IPost = new Post(postData);
+			const newPost: Post = new Post();
 			return newPost.save();
 		} catch (error) {
 			throw error;

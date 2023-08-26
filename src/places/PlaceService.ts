@@ -1,9 +1,9 @@
-import Place, { IPlace } from './PlaceSchema';
+import { Place } from './PlaceEntity';
 
 export const placeService = {
-	createPlace: async (placeData: IPlace): Promise<IPlace> => {
+	createPlace: async (placeData: Place): Promise<Place> => {
 		try {
-			const newPlace: IPlace = new Place(placeData);
+			const newPlace: Place = new Place();
 			return newPlace.save();
 		} catch (error) {
 			throw error;

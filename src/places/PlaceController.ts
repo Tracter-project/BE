@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { placeService } from './PlaceService';
-import { IPlace } from './PlaceSchema';
+import { Place } from './PlaceEntity';
 
 export const placeController = {
 	getMainPlaces: async (req: Request, res: Response): Promise<void> => {},
