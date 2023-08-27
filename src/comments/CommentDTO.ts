@@ -3,3 +3,12 @@ export class RegisteCommentDTO {
 	writer: number;
 	comment: string;
 }
+
+export class UpdateCommentDTO {
+	id: number;
+	comment: string;
+}
+
+export class EraseCommentDTO {
+	id: number;
+}

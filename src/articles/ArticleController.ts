@@ -14,7 +14,7 @@ export const articleController = {
 
 			if (!allArticle) {
 				return res.status(400).json({
-					message: 'getAllArticles',
+					message: 'getAllArticles: 게시글을 전체 조회할 수 없습니다.',
 				});
 			}
 			return res.status(200).json(allArticle);
@@ -34,7 +34,7 @@ export const articleController = {
 			await articleService.createArticle(subject, writer, title, contents);
 			return res
 				.status(201)
-				.json({ message: 'registeArticle:누락된 값이 있습니다.' });
+				.json({ message: 'registeArticle:게시글이 등록되었습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -48,7 +48,7 @@ export const articleController = {
 			if (!article) {
 				return res
 					.status(400)
-					.json({ message: 'getArticleDetail:게시글을 찾을 수 없습니다.' });
+					.json({ message: 'getArticleDetail: 게시글을 찾을 수 없습니다.' });
 			}
 			return res.status(200).json(article);
 		} catch (error) {

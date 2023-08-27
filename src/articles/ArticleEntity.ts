@@ -18,7 +18,6 @@ export class Article extends Base {
 	})
 	subject: subjectEnum;
 
-	@Column({ nullable: false })
 	@OneToOne(() => User, user => user.id)
 	@JoinColumn({ name: 'user_id' })
 	writer: string;
@@ -32,10 +31,9 @@ export class Article extends Base {
 	@Column({ default: 0 })
 	articleLikeCount: number;
 
-	@Column('simple-array')
 	@OneToMany(() => Comment, comment => comment.id)
 	@JoinColumn({ name: 'comment_id' })
-	comments: string[];
+	comments: Comment[];
 
 	// @Column('simple-array', { nullable: true })
 	// @ManyToMany(() => User)

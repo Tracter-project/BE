@@ -52,7 +52,7 @@ export const categoryService = {
 				}
 				category.categoryName = updateCategoryName;
 
-				return Category.update({ id }, { categoryName: updateCategoryName });
+				return Category.update({ id }, { categoryName: category.categoryName });
 			}
 			throw new Error('updateCategory: 동일한 카테고리 이름입니다.');
 		} catch (error) {

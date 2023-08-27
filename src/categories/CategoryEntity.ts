@@ -1,11 +1,12 @@
+import { Place } from '../places/PlaceEntity';
 import { Base } from '../entities/BaseEntity';
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 
 @Entity('categories')
 export class Category extends Base {
-	@PrimaryGeneratedColumn()
-	id: number;
-
 	@Column('varchar', { nullable: false })
 	categoryName: string;
+
+	@OneToMany(() => Place, place => place.category)
+	places: Place[];
 }

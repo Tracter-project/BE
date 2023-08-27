@@ -1,9 +1,10 @@
-import { Entity, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Category } from '../categories/CategoryEntity';
 import { User } from '../users/UserEntity';
 import { Base } from '../entities/BaseEntity';
+import { Image } from '../entities/ImagesEntity';
 
-enum RegionEnum {
+export enum RegionEnum {
 	SEOUL = '서울',
 	GANGWON = '강원-강릉',
 	JEOLLA = '전라-여수',
@@ -22,8 +23,7 @@ export class Place extends Base {
 	@Column('varchar', { nullable: false })
 	description: string;
 
-	@Column('varchar', { nullable: false })
-	@ManyToOne(() => Category)
+	@ManyToOne(() => Category, category => category.places)
 	@JoinColumn({ name: 'categoryId' })
 	category: Category;
 
@@ -49,7 +49,9 @@ export class Place extends Base {
 	@Column('varchar', { nullable: false })
 	bookingURL: string;
 
-	// @Column('simple-array', { nullable: true })
+	@OneToMany(() => Image, image => image.place)
+	images: Image[];
+
 	// @ManyToMany(() => User)
 	// @JoinTable({
 	// 	name: 'likes',
