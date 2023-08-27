@@ -5,15 +5,13 @@ import { Base } from '../entities/BaseEntity';
 
 @Entity('comments')
 export class Comment extends Base {
-	@Column('int', { nullable: false })
 	@ManyToOne(() => Article, article => article.comments)
 	@JoinColumn({ name: 'article_id' })
 	articleId: Article;
 
-	@Column('int', { nullable: false })
-	@OneToOne(() => User)
+	@ManyToOne(() => User)
 	@JoinColumn({ name: 'user_id' })
-	writer: number;
+	writer: User;
 
 	@Column('varchar', { nullable: false })
 	comment: string;

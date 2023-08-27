@@ -2,7 +2,7 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 import { Article, subjectEnum } from './ArticleEntity';
 
 export const articleService = {
-	// 글 작성
+	// 글 등록
 	createArticle: async (
 		subject: subjectEnum,
 		writer: string,
@@ -17,7 +17,7 @@ export const articleService = {
 			newArticle.contents = contents;
 			return newArticle.save();
 		} catch (error) {
-			throw error;
+			throw new Error('createArticle: 게시글 등록에 실패했습니다.');
 		}
 	},
 	// 게시글 검색(id)
@@ -45,14 +45,7 @@ export const articleService = {
 			article.title = title;
 			article.contents = contents;
 
-			return Article.update(
-				{ id },
-				{
-					subject: article.subject,
-					title: article.title,
-					contents: article.contents,
-				}
-			);
+			return Article.update({ id }, { subject, title, contents });
 		} catch (error) {
 			throw new Error('updateArticle: 게시글 수정에 실패했습니다.');
 		}

@@ -30,12 +30,10 @@ export class User extends Base {
 	@Column('varchar', { nullable: false })
 	password: string;
 
-	// @Column('simple-array', { nullable: true })
 	// @ManyToMany(() => Place, place => place.id)
 	// @JoinColumn({ name: 'place_id' })
 	// likedPlaces: Place[];
 
-	// @Column('simple-array', { nullable: true })
 	// @ManyToMany(() => Article, article => article.id)
 	// @JoinColumn({ name: 'id' })
 	// likedArticles: Article[];
@@ -53,12 +51,10 @@ export class User extends Base {
 	@JoinColumn()
 	token: string;
 
-	// @Column('simple-array', { nullable: true })
 	// @ManyToMany(() => Place)
 	// @JoinTable({ name: 'likes' })
 	// likedPlaces: Place[];
 
-	// @Column('simple-array', { nullable: true })
 	// @ManyToMany(() => Article)
 	// @JoinTable({ name: 'likes' })
 	// likedArticles: Article[];
