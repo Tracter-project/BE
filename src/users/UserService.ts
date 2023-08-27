@@ -99,7 +99,6 @@ export const userService = {
 	getUserByToken: async (token: string): Promise<User | null> => {
 		return await User.findOne({ where: { token } });
 	},
-
 	// 회원 정보 수정
 	updateUser: async (
 		email: string,
@@ -133,10 +132,7 @@ export const userService = {
 
 			user.password = hashedPassword;
 
-			return User.update(
-				{ email },
-				{ nickname: user.nickname, password: user.password }
-			);
+			return User.update({ email }, { nickname, password });
 		} catch (error) {
 			throw new Error('updateUser: 회원 정보 수정에 실패했습니다.');
 		}

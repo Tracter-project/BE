@@ -47,7 +47,6 @@ export const categoryController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
-
 	// 카테고리 수정
 	updateCategoryName: async (
 		req: Request,
@@ -65,7 +64,6 @@ export const categoryController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
-
 	// 카테고리 삭제
 	eraseCategoryName: async (req: Request, res: Response): Promise<Response> => {
 		try {
