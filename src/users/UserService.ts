@@ -146,29 +146,6 @@ export const userService = {
 		}
 	},
 
-	// 장소_좋아요
-	// likePlace: async (email: string): Promise<void> => {
-	// 	try {
-	// 		const user = await userService.getUserByEmail(email);
-
-	// 		if (!user) {
-	// 			throw new Error('likePlace: 사용자를 찾을 수 없습니다.');
-	// 		}
-
-	// 		const likedPlaceIds = user.likedPlaces.map(place => place.id);
-	// 			throw new Error('likePlace: 이미 좋아요가 되어 있는 사용자입니다.');
-	// 		}
-	// 	} catch (error) {
-	// 		throw new Error('likePlace: 장소에 좋아요가 실패했습니다.');
-	// 	}
-	// },
-	// // 장소_좋아요 취소
-	// unlikePlace: async (email: string): Promise<void> => {
-	// 	try {
-	// 	} catch (error) {
-	// 		throw new Error('unlikePlace: 장소에 좋아요 취소가 실패했습니다.');
-	// 	}
-	// },
 	// // 글_좋아요
 	// likeArticle: async (email: string): Promise<void> => {
 	// 	try {

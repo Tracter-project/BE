@@ -29,3 +29,8 @@ export class UpdatePlaceDTO {
 export class ErasePlaceDTO {
 	id: number;
 }
+
+export class LikePlacesDTO {
+	email: string;
+	placeId: number;
+}

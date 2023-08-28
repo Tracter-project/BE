@@ -7,7 +7,8 @@ export const articleService = {
 		subject: subjectEnum,
 		writer: string,
 		title: string,
-		contents: string
+		contents: string,
+		placeImage: string
 	): Promise<Article> => {
 		try {
 			const newArticle: Article = new Article();
@@ -31,7 +32,6 @@ export const articleService = {
 	// 게시글 수정
 	updateArticle: async (
 		id: number,
-		subject: subjectEnum,
 		title: string,
 		contents: string
 	): Promise<UpdateResult> => {
@@ -41,11 +41,10 @@ export const articleService = {
 			if (!article) {
 				throw new Error('updateArticle: 게시글을 찾을 수 없습니다.');
 			}
-			article.subject = subject;
 			article.title = title;
 			article.contents = contents;
 
-			return Article.update({ id }, { subject, title, contents });
+			return Article.update({ id }, { title, contents });
 		} catch (error) {
 			throw new Error('updateArticle: 게시글 수정에 실패했습니다.');
 		}

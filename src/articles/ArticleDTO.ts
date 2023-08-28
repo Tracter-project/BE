@@ -5,6 +5,7 @@ export class RegisteArticleDTO {
 	writer: string;
 	title: string;
 	contents: string;
+	placeImage: string;
 }
 
 export class UpdateArticleDTO {

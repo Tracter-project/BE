@@ -30,14 +30,6 @@ export class User extends Base {
 	@Column('varchar', { nullable: false })
 	password: string;
 
-	// @ManyToMany(() => Place, place => place.id)
-	// @JoinColumn({ name: 'place_id' })
-	// likedPlaces: Place[];
-
-	// @ManyToMany(() => Article, article => article.id)
-	// @JoinColumn({ name: 'id' })
-	// likedArticles: Article[];
-
 	@Column('enum', {
 		enum: roleEnum,
 		default: roleEnum.MEMBER,
@@ -51,9 +43,13 @@ export class User extends Base {
 	@JoinColumn()
 	token: string;
 
-	// @ManyToMany(() => Place)
-	// @JoinTable({ name: 'likes' })
-	// likedPlaces: Place[];
+	@ManyToMany(() => Place, place => place.id)
+	@JoinColumn({ name: 'place_id' })
+	likedPlaces: Place[];
+
+	// @ManyToMany(() => Article, article => article.id)
+	// @JoinColumn({ name: 'id' })
+	// likedArticles: Article[];
 
 	// @ManyToMany(() => Article)
 	// @JoinTable({ name: 'likes' })

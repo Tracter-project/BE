@@ -133,29 +133,8 @@ export const userController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
-	// likePlace: async (req: Request, res: Response): Promise<Response> => {
-	// 	try {
-	// 		const { email }: User = req.body;
 
-	// 		await userService.likePlace(email);
-	// 		return res.status(200).json({ message: ': 장소 좋아요에 성공했습니다.' });
-	// 	} catch (error) {
-	// 		return res.status(500).json({ error: error.message });
-	// 	}
-	// },
-	// unlikePlace: async (req: Request, res: Response): Promise<Response> => {
-	// 	try {
-	// 		const { email }: User = req.body;
-
-	// 		await userService.unlikePlace(email);
-	// 		return res
-	// 			.status(200)
-	// 			.json({ message: ': 장소 좋아요 취소에 성공했습니다.' });
-	// 	} catch (error) {
-	// 		return res.status(500).json({ error: error.message });
-	// 	}
-	// },
-	// likeArticle: async (req: Request, res: Response): Promise<Response> => {
+	// likeArticles: async (req: Request, res: Response): Promise<Response> => {
 	// 	try {
 	// 		const { email }: User = req.body;
 
@@ -165,7 +144,7 @@ export const userController = {
 	// 		return res.status(500).json({ error: error.message });
 	// 	}
 	// },
-	// unlikeArticle: async (req: Request, res: Response): Promise<Response> => {
+	// unlikeArticles: async (req: Request, res: Response): Promise<Response> => {
 	// 	try {
 	// 		const { email }: User = req.body;
 

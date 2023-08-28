@@ -1,6 +1,12 @@
 import { Request, Response } from 'express';
 import { placeService } from './PlaceService';
-import { ErasePlaceDTO, RegistePlaceDTO, UpdatePlaceDTO } from './PlaceDTO';
+import {
+	ErasePlaceDTO,
+	RegistePlaceDTO,
+	UpdatePlaceDTO,
+	LikePlacesDTO,
+} from './PlaceDTO';
+import { userService } from '../users/UserService';
 
 export const placeController = {
 	// 메인페이지 숙소 조회
@@ -62,9 +68,50 @@ export const placeController = {
 		}
 	},
 	// 숙소 좋아요
-	likePlace: async (req: Request, res: Response): Promise<void> => {},
-	// 숙소 좋아요 취소
-	unlikePlace: async (req: Request, res: Response): Promise<void> => {},
+	likePlaces: async (req: Request, res: Response): Promise<Response> => {
+		try {
+			const { email, placeId }: LikePlacesDTO = req.body;
+
+			const user = await userService.getUserByEmail(email);
+			const place = await placeService.getPlaceById(placeId);
+
+			if (!user || !place) {
+				return res
+					.status(400)
+					.json({ message: 'likePlaces: 사용자나 장소를 찾을 수 없습니다.' });
+			}
+
+			await placeService.likePlace(user, place);
+
+			return res.status(200).json({ message: '장소 좋아요에 성공했습니다.' });
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+
+	unlikePlaces: async (req: Request, res: Response): Promise<Response> => {
+		try {
+			const { email, placeId }: LikePlacesDTO = req.body;
+
+			const user = await userService.getUserByEmail(email);
+			const place = await placeService.getPlaceById(placeId);
+
+			if (!user || !place) {
+				return res
+					.status(400)
+					.json({ message: 'unlikePlaces: 사용자나 장소를 찾을 수 없습니다.' });
+			}
+
+			await placeService.unlikePlace(user, place);
+
+			return res
+				.status(200)
+				.json({ message: '장소 좋아요 취소에 성공했습니다.' });
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+
 	// 숙소 등록
 	registePlace: async (req: Request, res: Response): Promise<Response> => {
 		const {

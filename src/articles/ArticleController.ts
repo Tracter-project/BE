@@ -24,14 +24,21 @@ export const articleController = {
 	},
 	// 게시글 등록
 	registeArticle: async (req: Request, res: Response): Promise<Response> => {
-		const { subject, writer, title, contents }: RegisteArticleDTO = req.body;
+		const { subject, writer, title, contents, placeImage }: RegisteArticleDTO =
+			req.body;
 		try {
 			if (!writer || !title) {
 				return res
 					.status(400)
 					.json({ message: 'registeArticle:누락된 값이 있습니다.' });
 			}
-			await articleService.createArticle(subject, writer, title, contents);
+			await articleService.createArticle(
+				subject,
+				writer,
+				title,
+				contents,
+				placeImage
+			);
 			return res
 				.status(201)
 				.json({ message: 'registeArticle:게시글이 등록되었습니다.' });
@@ -58,9 +65,9 @@ export const articleController = {
 	// 게시글 수정
 	updateArticle: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { id, subject, title, contents }: UpdateArticleDTO = req.body;
+			const { id, title, contents }: UpdateArticleDTO = req.body;
 
-			await articleService.updateArticle(id, subject, title, contents);
+			await articleService.updateArticle(id, title, contents);
 
 			return res
 				.status(200)

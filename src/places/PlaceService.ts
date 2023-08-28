@@ -1,6 +1,9 @@
+import { userService } from '../users/UserService';
 import { Category } from '../categories/CategoryEntity';
 import { Place, RegionEnum } from './PlaceEntity';
 import { DeleteResult, UpdateResult } from 'typeorm';
+import { User } from '../users/UserEntity';
+import { UserLikePlaces } from '../entities/UserLikePlacesEntity';
 
 export const placeService = {
 	// 숙소 등록
@@ -85,6 +88,60 @@ export const placeService = {
 			return DeleteResult;
 		} catch (error) {
 			throw new Error('deletePlace: 숙소 삭제에 실패했습니다.');
+		}
+	},
+
+	// 좋아요 수 수정
+	updateLikePlaceCounter: async (
+		place: Place,
+		increment: number
+	): Promise<void> => {
+		try {
+			place.placeLikeCount += increment;
+			await Place.save(place);
+		} catch (error) {
+			throw new Error('updateLikePlaceCounter: 좋아요 수 증감에 실패했습니다.');
+		}
+	},
+
+	// 장소_좋아요
+	likePlace: async (user: User, place: Place): Promise<void> => {
+		try {
+			const userLikedPlace = await UserLikePlaces.find({
+				where: { user: { id: user.id }, place: { id: place.id } },
+			});
+
+			if (userLikedPlace) {
+				throw new Error('likePlace: 이미 좋아요한 장소입니다.');
+			}
+
+			const userLike = new UserLikePlaces();
+			userLike.user = user;
+			userLike.place = place;
+
+			await UserLikePlaces.save(userLike);
+			await placeService.updateLikePlaceCounter(place, 1);
+		} catch (error) {
+			throw new Error('likePlace: 장소에 좋아요가 실패했습니다.');
+		}
+	},
+
+	// 장소_좋아요 취소
+	unlikePlace: async (user: User, place: Place): Promise<void> => {
+		try {
+			const userLikedPlace = await UserLikePlaces.find({
+				where: { user: { id: user.id }, place: { id: place.id } },
+			});
+
+			if (!userLikedPlace) {
+				throw new Error(
+					'unlikePlace: 좋아요가 존재하지 않아 삭제할 수 없습니다.'
+				);
+			}
+			UserLikePlaces.remove(userLikedPlace);
+			await placeService.updateLikePlaceCounter(place, -1);
+		} catch (error) {
+			throw new Error('unlikePlace: 좋아요 삭제에 실패했습니다.');
 		}
 	},
 	// 숙소 전체 조회

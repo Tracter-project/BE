@@ -35,6 +35,9 @@ export class Article extends Base {
 	@JoinColumn({ name: 'comment_id' })
 	comments: Comment[];
 
+	@Column()
+	placeImage: string;
+
 	// @Column('simple-array', { nullable: true })
 	// @ManyToMany(() => User)
 	// @JoinTable({
