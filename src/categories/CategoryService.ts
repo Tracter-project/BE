@@ -1,5 +1,6 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { Category } from './CategoryEntity';
+import { userService } from '../users/UserService';
 
 export const categoryService = {
 	// 카테고리 중복 검사
@@ -15,8 +16,19 @@ export const categoryService = {
 		return await Category.find();
 	},
 	// 카테고리 등록
-	createCategory: async (categoryName: string): Promise<Category> => {
+	createCategory: async (
+		userId: number,
+		categoryName: string
+	): Promise<Category> => {
 		try {
+			const isAdmin = await userService.getUserById(userId);
+
+			if (!isAdmin) {
+				throw new Error(
+					'createCategory: 관리자만 카테고리를 등록할 수 있습니다.'
+				);
+			}
+
 			const isDuplicateCategoryName: boolean =
 				await categoryService.isDuplicateCategoryName(categoryName);
 
@@ -27,17 +39,25 @@ export const categoryService = {
 			const newCategory: Category = new Category();
 			newCategory.categoryName = categoryName;
 
-			return newCategory.save();
+			return Category.save(newCategory);
 		} catch (error) {
-			throw new Error('createCategory: 카테고리 등록에 실패했습니다.');
+			throw new Error(error.message);
 		}
 	},
 	// 카테고리 수정
 	updateCategory: async (
+		userId: number,
 		id: number,
 		updateCategoryName: string
 	): Promise<UpdateResult> => {
 		try {
+			const isAdmin = await userService.getUserById(userId);
+
+			if (!isAdmin) {
+				throw new Error(
+					'createCategory: 관리자만 카테고리를 등록할 수 있습니다.'
+				);
+			}
 			const category = await categoryService.getCategoryById(id);
 
 			if (!category) {
@@ -56,12 +76,19 @@ export const categoryService = {
 			}
 			throw new Error('updateCategory: 동일한 카테고리 이름입니다.');
 		} catch (error) {
-			throw new Error('updateCategory: 카테고리 정보 수정에 실패했습니다.');
+			throw new Error(error.message);
 		}
 	},
 	// 카테고리 삭제
-	deleteCategory: async (id: number): Promise<DeleteResult> => {
+	deleteCategory: async (userId: number, id: number): Promise<DeleteResult> => {
 		try {
+			const isAdmin = await userService.getUserById(userId);
+
+			if (!isAdmin) {
+				throw new Error(
+					'createCategory: 관리자만 카테고리를 등록할 수 있습니다.'
+				);
+			}
 			const deleteResult = await Category.delete({ id });
 
 			if (deleteResult.affected === 0) {
@@ -70,7 +97,7 @@ export const categoryService = {
 
 			return deleteResult;
 		} catch (error) {
-			throw new Error('deleteCategory: 카테고리 삭제에 실패했습니다.');
+			throw new Error(error.message);
 		}
 	},
 };

@@ -31,6 +31,7 @@ export const categoryController = {
 		res: Response
 	): Promise<Response> => {
 		try {
+			const admin = req.cookies;
 			const { categoryName }: RegisteCategoryDTO = req.body;
 
 			if (!categoryName) {
@@ -39,7 +40,7 @@ export const categoryController = {
 					.json({ message: 'createCategory:category 값을 없습니다.' });
 			}
 
-			await categoryService.createCategory(categoryName);
+			await categoryService.createCategory(admin.id, categoryName);
 			return res
 				.status(201)
 				.json({ message: 'createCategory: 카테고리 등록이 완료되었습니다.' });
@@ -53,9 +54,10 @@ export const categoryController = {
 		res: Response
 	): Promise<Response> => {
 		try {
+			const admin = req.cookies;
 			const { id, updateCategoryName }: UpdateCategoryDTO = req.body;
 
-			await categoryService.updateCategory(id, updateCategoryName);
+			await categoryService.updateCategory(admin.id, id, updateCategoryName);
 
 			return res.status(200).json({
 				message: 'updateCategoryName: 카테고리 정보 수정에 성공했습니다.',
@@ -67,9 +69,10 @@ export const categoryController = {
 	// 카테고리 삭제
 	eraseCategoryName: async (req: Request, res: Response): Promise<Response> => {
 		try {
+			const admin = req.cookies;
 			const { id }: EraseCategoryDTO = req.body;
 
-			await categoryService.deleteCategory(id);
+			await categoryService.deleteCategory(admin.id, id);
 			return res.status(200).json({
 				message: 'eraseCategoryName: 카테고리 삭제에 성공했습니다.',
 			});

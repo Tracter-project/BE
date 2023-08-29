@@ -1,31 +1,48 @@
 import { Router } from 'express';
 import { placeController } from './PlaceController';
-// 회원, 관리자 구분 미들웨어 필요
+import { tokenAuth } from '../middlewares/tokenAuthMiddleWare';
+import { adminAuth } from '../middlewares/adminAuthMiddleWare';
 
 export const placeRouter: Router = Router();
 
 // 메인페이지 숙소 조회
 placeRouter.get('/places', placeController.getMainPlaces);
-
 // 카테고리별 숙소 조회
 placeRouter.get(
 	'/places/categories/:category',
 	placeController.getPlacesByCategory
 );
-
 // 숙소 상세 조회
 placeRouter.get('/places/:placeId', placeController.getPlaceDetail);
 /// 전체 숙소 조회
 placeRouter.get('/places/all', placeController.getTotalPlaces);
-// 회원 구분 미들웨어 필요
-// [회원] 숙소 좋아요
-placeRouter.post('/places/likes', placeController.likePlace);
-// [회원] 숙소 좋아요 취소
-placeRouter.delete('/places/likes', placeController.unlikePlace);
-// 관리자 구분 미들웨어 필요
-// [관리자] 숙소 등록
-placeRouter.patch('/admin/places', placeController.registePlace);
-// [관리자] 숙소 수정
-placeRouter.patch('/admin/places', placeController.updatePlace);
-// [관리자] 숙소 삭제
-placeRouter.delete('/admin/places', placeController.erasePlace);
+// 숙소 좋아요 (인증 필요)
+placeRouter.post('/places/likes', tokenAuth, (req, res) =>
+	placeController.handleLikePlaces(req, res, true)
+);
+// 숙소 좋아요 취소 (인증 필요)
+placeRouter.delete('/places/likes', tokenAuth, (req, res) =>
+	placeController.handleLikePlaces(req, res, false)
+);
+
+// 숙소 등록 (관리자 인증 필요)
+placeRouter.post(
+	'/admin/places',
+	tokenAuth,
+	adminAuth,
+	placeController.registePlace
+);
+// 숙소 수정 (관리자 인증 필요)
+placeRouter.patch(
+	'/admin/places',
+	tokenAuth,
+	adminAuth,
+	placeController.updatePlace
+);
+// 숙소 삭제 (관리자 인증 필요)
+placeRouter.delete(
+	'/admin/places',
+	tokenAuth,
+	adminAuth,
+	placeController.erasePlace
+);

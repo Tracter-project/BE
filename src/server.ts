@@ -1,15 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-// import nunjucks from 'nunjucks';
 import { router } from './router';
 
 export const server = express();
-
-// view engine 설정 (nunjucks)
-// server.set('view engine', 'html');
-// nunjucks.confiugre('./views', {
-// 	express: server,
-// });
 
 // CORS 에러 방지
 server.use(cors());

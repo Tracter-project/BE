@@ -1,8 +1,8 @@
 import { Entity, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
-
+import { Base } from '../entities/BaseEntity';
 import { User } from '../users/UserEntity';
 import { Comment } from '../comments/CommentEntity';
-import { Base } from '../entities/BaseEntity';
+import { UserLikeArticles } from '../entities/UserLikeArticlesEntity';
 
 export enum subjectEnum {
 	REVIEW = '후기',
@@ -35,16 +35,14 @@ export class Article extends Base {
 	@JoinColumn({ name: 'comment_id' })
 	comments: Comment[];
 
-	// @Column('simple-array', { nullable: true })
-	// @ManyToMany(() => User)
-	// @JoinTable({
-	// 	name: 'likes',
-	// 	joinColumn: {
-	// 		name: 'article_id',
-	// 	},
-	// 	inverseJoinColumn: {
-	// 		name: 'user_id',
-	// 	},
-	// })
-	// usersWhoLikedArticle: User[];
+	@Column()
+	placeImage: string;
+
+	@OneToMany(
+		() => UserLikeArticles,
+		userLikeArticles => {
+			userLikeArticles.user;
+		}
+	)
+	likedArticles: number;
 }
