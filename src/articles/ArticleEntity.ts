@@ -35,7 +35,7 @@ export class Article extends Base {
 	@JoinColumn({ name: 'comment_id' })
 	comments: Comment[];
 
-	@Column()
+	@Column({ nullable: true })
 	placeImage: string;
 
 	@OneToMany(
