@@ -31,6 +31,5 @@ export class ErasePlaceDTO {
 }
 
 export class LikePlacesDTO {
-	email: string;
 	placeId: number;
 }

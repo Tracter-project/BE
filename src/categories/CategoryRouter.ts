@@ -1,29 +1,30 @@
 import { Router } from 'express';
 import { categoryController } from './CategoryController';
-import { isAdminMiddleware } from '../middlewares/isAdminMiddleWare';
-// 관리자 구분 미들웨어 필요
+import { adminAuth } from '../middlewares/adminAuthMiddleWare';
+import { tokenAuth } from '../middlewares/tokenAuthMiddleWare';
 
 export const categoryRouter = Router();
 
 // 카테고리 전체 조회
 categoryRouter.get('/categories', categoryController.getAllCategoryName);
-// 관리자 구분 미들웨어 필요
-
-// [관리자] 카테고리 등록
+// 카테고리 등록 (관리자 인증 필요)
 categoryRouter.post(
 	'/admin/categories',
-	isAdminMiddleware,
+	tokenAuth,
+	adminAuth,
 	categoryController.registeCategoryName
 );
-// [관리자] 카레고리 수정
+// 카레고리 수정 (관리자 인증 필요)
 categoryRouter.patch(
 	'/admin/categories',
-	isAdminMiddleware,
+	tokenAuth,
+	adminAuth,
 	categoryController.updateCategoryName
 );
-// [관리자] 카테고리 삭제
+// 카테고리 삭제 (관리자 인증 필요)
 categoryRouter.delete(
 	'/admin/categories',
-	isAdminMiddleware,
+	tokenAuth,
+	adminAuth,
 	categoryController.eraseCategoryName
 );

@@ -1,14 +1,5 @@
-import {
-	Entity,
-	Column,
-	ManyToOne,
-	JoinColumn,
-	OneToMany,
-	JoinTable,
-	ManyToMany,
-} from 'typeorm';
+import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Category } from '../categories/CategoryEntity';
-import { User } from '../users/UserEntity';
 import { Base } from '../entities/BaseEntity';
 import { Image } from '../entities/ImagesEntity';
 import { UserLikePlaces } from '../entities/UserLikePlacesEntity';
