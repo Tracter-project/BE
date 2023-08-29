@@ -13,7 +13,7 @@ export const userController = {
 	registeUser: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const { email, password, nickname }: RegisteUserDTO = req.body;
-
+			console.log(req.body);
 			if (!email || !password || !nickname) {
 				return res
 					.status(400)
