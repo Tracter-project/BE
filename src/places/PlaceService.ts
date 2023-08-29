@@ -28,10 +28,10 @@ export const placeService = {
 		return await Place.find();
 	},
 	// 카테고리별 숙소 조회
-	getPlacesByCategory: async (category: string) => {
+	getPlacesByCategory: async (id: number) => {
 		try {
 			const placesInCategory = await Place.find({
-				where: { category: { categoryName: category } },
+				where: { category: { id: id } },
 			});
 
 			return placesInCategory;

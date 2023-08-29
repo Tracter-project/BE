@@ -16,10 +16,7 @@ export const categoryService = {
 		return await Category.find();
 	},
 	// 카테고리 등록
-	createCategory: async (
-		userId: number,
-		categoryName: string
-	): Promise<Category> => {
+	createCategory: async (userId: number, id: number): Promise<Category> => {
 		try {
 			const isAdmin = await userService.getUserById(userId);
 
