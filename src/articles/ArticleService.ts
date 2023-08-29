@@ -9,17 +9,20 @@ export const articleService = {
 	createArticle: async (
 		userId: number,
 		subject: subjectEnum,
-		writer: string,
 		title: string,
 		contents: string,
 		placeImage: string
 	): Promise<Article> => {
-		const isUser = await userService.getUserById(userId);
-
-		if (!isUser) {
-			throw new Error(`createPlace: 관리자만 숙소를 등록할 수 있습니다.`);
-		}
 		try {
+			const isUser = await userService.getUserById(userId);
+
+			if (!isUser) {
+				throw new Error(`createPlace: 관리자만 숙소를 등록할 수 있습니다.`);
+			}
+
+			const writer = isUser.nickname;
+			console.log(writer);
+
 			const newArticle: Article = new Article();
 			newArticle.subject = subject;
 			newArticle.writer = writer;
@@ -28,7 +31,7 @@ export const articleService = {
 			newArticle.placeImage = placeImage;
 			return Article.save(newArticle);
 		} catch (error) {
-			throw new Error('createArticle: 게시글 등록에 실패했습니다.');
+			throw new Error(error.message);
 		}
 	},
 	// 게시글 검색(id)
@@ -63,7 +66,7 @@ export const articleService = {
 
 			return Article.update({ id }, { title, contents });
 		} catch (error) {
-			throw new Error('updateArticle: 게시글 수정에 실패했습니다.');
+			throw new Error(error.message);
 		}
 	},
 	// 게시글 삭제
@@ -83,7 +86,7 @@ export const articleService = {
 
 			return deleteResult;
 		} catch (error) {
-			throw new Error('deleteCategory: 카테고리 삭제에 실패했습니다.');
+			throw new Error(error.message);
 		}
 	},
 	// 좋아요 카운트 수정
