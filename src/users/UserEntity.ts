@@ -1,15 +1,4 @@
-import {
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	OneToMany,
-	JoinColumn,
-	CreateDateColumn,
-	UpdateDateColumn,
-	ManyToMany,
-	JoinTable,
-} from 'typeorm';
-
+import { Entity, Column, JoinColumn, ManyToMany } from 'typeorm';
 import { Article } from '../articles/ArticleEntity';
 import { Place } from '../places/PlaceEntity';
 import { Base } from '../entities/BaseEntity';
@@ -30,14 +19,6 @@ export class User extends Base {
 	@Column('varchar', { nullable: false })
 	password: string;
 
-	// @ManyToMany(() => Place, place => place.id)
-	// @JoinColumn({ name: 'place_id' })
-	// likedPlaces: Place[];
-
-	// @ManyToMany(() => Article, article => article.id)
-	// @JoinColumn({ name: 'id' })
-	// likedArticles: Article[];
-
 	@Column('enum', {
 		enum: roleEnum,
 		default: roleEnum.MEMBER,
@@ -51,11 +32,11 @@ export class User extends Base {
 	@JoinColumn()
 	token: string;
 
-	// @ManyToMany(() => Place)
-	// @JoinTable({ name: 'likes' })
-	// likedPlaces: Place[];
+	@ManyToMany(() => Place, place => place.id)
+	@JoinColumn({ name: 'place_id' })
+	likedPlaces: Place[];
 
-	// @ManyToMany(() => Article)
-	// @JoinTable({ name: 'likes' })
-	// likedArticles: Article[];
+	@ManyToMany(() => Article, article => article.id)
+	@JoinColumn({ name: 'article_id' })
+	likedArticles: Article[];
 }

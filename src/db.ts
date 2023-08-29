@@ -6,8 +6,8 @@ import { Article } from './articles/ArticleEntity';
 import { Comment } from './comments/CommentEntity';
 import { Category } from './categories/CategoryEntity';
 import { Image } from './entities/ImagesEntity';
-import { UserLikePlaces } from './entities/UserPlaceLikeEntity';
-import { UserLikePosts } from './entities/UserPostLikeEntity';
+import { UserLikeArticles } from './entities/UserLikeArticlesEntity';
+import { UserLikePlaces } from './entities/UserLikePlacesEntity';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -27,7 +27,7 @@ export const connectDB = new DataSource({
 		Category,
 		Image,
 		UserLikePlaces,
-		UserLikePosts,
+		UserLikeArticles,
 	],
 	synchronize: true,
 	logging: ['warn', 'error'],

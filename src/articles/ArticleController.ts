@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { articleService } from './ArticleService';
+import { userService } from '../users/UserService';
 import {
 	RegisteArticleDTO,
 	UpdateArticleDTO,
 	EraseArticleDTO,
+	LikeArticlesDTO,
 } from './ArticleDTO';
 
 export const articleController = {
@@ -24,14 +26,29 @@ export const articleController = {
 	},
 	// 게시글 등록
 	registeArticle: async (req: Request, res: Response): Promise<Response> => {
-		const { subject, writer, title, contents }: RegisteArticleDTO = req.body;
 		try {
+			const user = req.cookies;
+			const {
+				subject,
+				writer,
+				title,
+				contents,
+				placeImage,
+			}: RegisteArticleDTO = req.body;
+
 			if (!writer || !title) {
 				return res
 					.status(400)
 					.json({ message: 'registeArticle:누락된 값이 있습니다.' });
 			}
-			await articleService.createArticle(subject, writer, title, contents);
+			await articleService.createArticle(
+				user.id,
+				subject,
+				writer,
+				title,
+				contents,
+				placeImage
+			);
 			return res
 				.status(201)
 				.json({ message: 'registeArticle:게시글이 등록되었습니다.' });
@@ -42,8 +59,16 @@ export const articleController = {
 	// 게시글 상세 조회
 	getArticleDetail: async (req: Request, res: Response): Promise<Response> => {
 		try {
+			const user = req.cookies;
 			const { id } = req.params;
+			const isUser = await userService.getUserById(user.id);
 			const article = await articleService.getArticleById(Number(id));
+
+			if (!isUser) {
+				return res
+					.status(400)
+					.json({ message: 'getArticleDetail:사용자를 찾을 수 없습니다.' });
+			}
 
 			if (!article) {
 				return res
@@ -58,9 +83,10 @@ export const articleController = {
 	// 게시글 수정
 	updateArticle: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { id, subject, title, contents }: UpdateArticleDTO = req.body;
+			const user = req.cookies;
+			const { id, title, contents }: UpdateArticleDTO = req.body;
 
-			await articleService.updateArticle(id, subject, title, contents);
+			await articleService.updateArticle(user.id, id, title, contents);
 
 			return res
 				.status(200)
@@ -72,12 +98,42 @@ export const articleController = {
 	// 게시글 삭제
 	eraseArticle: async (req: Request, res: Response): Promise<Response> => {
 		try {
+			const user = req.cookies;
 			const { id }: EraseArticleDTO = req.body;
 
-			await articleService.deleteArticle(id);
+			await articleService.deleteArticle(user.id, id);
 			return res
 				.status(200)
 				.json({ message: 'eraseArticle: 게시글 삭제에 성공했습니다.' });
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+	// 숙소 좋아요 처리
+	handleLikeArticles: async (
+		req: Request,
+		res: Response,
+		like: boolean
+	): Promise<Response> => {
+		try {
+			const user = req.cookies;
+			const { articleId }: LikeArticlesDTO = req.body;
+
+			const likeUser = await userService.getUserById(user.id);
+			const article = await articleService.getArticleById(articleId);
+
+			if (!likeUser || !article) {
+				return res.status(400).json({
+					message:
+						'unlikeArticles: 숙소 좋아요 처리에 필요한 정보가 부족합니다.',
+				});
+			}
+
+			await articleService.likeArticle(likeUser, article, like);
+
+			return res
+				.status(200)
+				.json({ message: `숙소 좋아요 처리에 성공했습니다.` });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

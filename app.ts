@@ -1,8 +1,6 @@
-import express, { Request, Response, NextFunction } from 'express';
 import { server } from './src/server';
 import { connectDB } from './src/db';
 import dotenv from 'dotenv';
-import { router } from './src/router';
 
 dotenv.config();
 

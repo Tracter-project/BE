@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Category } from '../categories/CategoryEntity';
-import { User } from '../users/UserEntity';
 import { Base } from '../entities/BaseEntity';
 import { Image } from '../entities/ImagesEntity';
+import { UserLikePlaces } from '../entities/UserLikePlacesEntity';
 
 export enum RegionEnum {
 	SEOUL = '서울',
@@ -52,15 +52,11 @@ export class Place extends Base {
 	@OneToMany(() => Image, image => image.place)
 	images: Image[];
 
-	// @ManyToMany(() => User)
-	// @JoinTable({
-	// 	name: 'likes',
-	// 	joinColumn: {
-	// 		name: 'place_id',
-	// 	},
-	// 	inverseJoinColumn: {
-	// 		name: 'user_id',
-	// 	},
-	// })
-	// usersWholikedPlace: User[];
+	@OneToMany(
+		() => UserLikePlaces,
+		userLikePlace => {
+			userLikePlace.user;
+		}
+	)
+	likedPlaces: number;
 }

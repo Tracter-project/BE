@@ -1,17 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
-import { Auth } from './Auth';
 
-export const isAdminMiddleware = async (
+export const adminAuth = async (
 	req: Request,
 	res: Response,
 	next: NextFunction
 ): Promise<any> => {
-	const { email } = req.body;
+	const user = req.cookies;
+
 	try {
-		const isAdmin = await Auth.isAdmin(email);
+		const isAdmin = user.role === 'admin' ? true : false;
 
 		if (!isAdmin) {
-			//
 			return res.status(403).json({
 				message: '관리자만 접근할 수 있는 기능입니다.',
 			});
