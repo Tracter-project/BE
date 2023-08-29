@@ -31,15 +31,17 @@ export const placeController = {
 		res: Response
 	): Promise<Response> => {
 		try {
-			const { category } = req.params;
+			const { id } = req.params;
 
-			if (!category) {
+			if (!id) {
 				return res
 					.status(400)
 					.json({ message: '카테고리를 선택하지 않았습니다.' });
 			}
 
-			const placesInCategory = await placeService.getPlacesByCategory(category);
+			const placesInCategory = await placeService.getPlacesByCategory(
+				Number(id)
+			);
 
 			if (placesInCategory.length === 0) {
 				return res
