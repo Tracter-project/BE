@@ -28,23 +28,17 @@ export const articleController = {
 	registeArticle: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const user = req.cookies;
-			const {
-				subject,
-				writer,
-				title,
-				contents,
-				placeImage,
-			}: RegisteArticleDTO = req.body;
+			const { subject, title, contents, placeImage }: RegisteArticleDTO =
+				req.body;
 
-			if (!writer || !title) {
+			if (!title) {
 				return res
 					.status(400)
-					.json({ message: 'registeArticle:누락된 값이 있습니다.' });
+					.json({ message: 'registeArticle:게시글 제목이 비어져있습니다.' });
 			}
 			await articleService.createArticle(
-				user.id,
+				user,
 				subject,
-				writer,
 				title,
 				contents,
 				placeImage
