@@ -5,7 +5,7 @@ import { Base } from '../entities/BaseEntity';
 @Entity('comments')
 export class Comment extends Base {
 	@ManyToOne(() => Article, article => article.comments)
-	@JoinColumn({ name: 'article_id' })
+	@JoinColumn()
 	articleId: Article;
 
 	@Column('varchar', { nullable: false })

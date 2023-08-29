@@ -28,10 +28,6 @@ export class User extends Base {
 	@Column({ default: false })
 	isDeleted: boolean;
 
-	@Column('varchar', { nullable: true })
-	@JoinColumn()
-	token: string;
-
 	@ManyToMany(() => Place, place => place.id)
 	@JoinColumn({ name: 'place_id' })
 	likedPlaces: Place[];
