@@ -1,4 +1,11 @@
-import { Entity, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import {
+	Entity,
+	Column,
+	OneToMany,
+	OneToOne,
+	JoinColumn,
+	ManyToOne,
+} from 'typeorm';
 import { Base } from '../entities/BaseEntity';
 import { User } from '../users/UserEntity';
 import { Comment } from '../comments/CommentEntity';
@@ -18,8 +25,7 @@ export class Article extends Base {
 	})
 	subject: subjectEnum;
 
-	@OneToOne(() => User, user => user.id)
-	@JoinColumn({ name: 'user_id' })
+	@Column('varchar', { nullable: false })
 	writer: string;
 
 	@Column({ nullable: false })

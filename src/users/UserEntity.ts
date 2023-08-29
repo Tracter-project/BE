@@ -37,6 +37,6 @@ export class User extends Base {
 	likedPlaces: Place[];
 
 	@ManyToMany(() => Article, article => article.id)
-	@JoinColumn({ name: 'article_id' })
+	@JoinColumn({ name: 'id' })
 	likedArticles: Article[];
 }
