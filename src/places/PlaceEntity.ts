@@ -6,9 +6,9 @@ import { UserLikePlaces } from '../entities/UserLikePlacesEntity';
 
 export enum RegionEnum {
 	SEOUL = '서울',
-	GANGWON = '강원-강릉',
-	JEOLLA = '전라-여수',
-	GYEONGSANG = '경상-부산',
+	GANGWON = '강원',
+	JEOLLA = '전라',
+	GYEONGSANG = '경상',
 	JEJU = '제주',
 }
 
@@ -23,8 +23,7 @@ export class Place extends Base {
 	@Column('varchar', { nullable: false })
 	description: string;
 
-	@ManyToOne(() => Category, category => category.places)
-	@JoinColumn({ name: 'categoryId' })
+	@Column('varchar', { nullable: false })
 	category: Category;
 
 	@Column('enum', {
@@ -37,13 +36,13 @@ export class Place extends Base {
 	@Column('int', { default: 0 })
 	placeLikeCount: number;
 
-	@Column('varchar', { nullable: false })
+	@Column('varchar', { nullable: true })
 	bannerImage: string;
 
 	@Column('varchar', { nullable: false })
 	mainImage: string;
 
-	@Column('simple-array', { nullable: false })
+	@Column('simple-array', { nullable: true })
 	detailImage: string[];
 
 	@Column('varchar', { nullable: false })

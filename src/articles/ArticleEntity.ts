@@ -7,7 +7,6 @@ import {
 	ManyToOne,
 } from 'typeorm';
 import { Base } from '../entities/BaseEntity';
-import { User } from '../users/UserEntity';
 import { Comment } from '../comments/CommentEntity';
 import { UserLikeArticles } from '../entities/UserLikeArticlesEntity';
 
@@ -28,20 +27,20 @@ export class Article extends Base {
 	@Column('varchar', { nullable: false })
 	writer: string;
 
-	@Column({ nullable: false })
+	@Column('varchar', { nullable: false })
 	title: string;
 
-	@Column()
+	@Column('varchar', { nullable: true })
 	contents: string;
 
-	@Column({ default: 0 })
+	@Column('int', { default: 0 })
 	articleLikeCount: number;
 
 	@OneToMany(() => Comment, comment => comment.id)
 	@JoinColumn({ name: 'comment_id' })
 	comments: Comment[];
 
-	@Column({ nullable: true })
+	@Column('varchar', { nullable: true })
 	placeImage: string;
 
 	@OneToMany(
