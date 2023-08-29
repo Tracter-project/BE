@@ -72,7 +72,7 @@ export const categoryController = {
 			const admin = req.cookies;
 			const { id }: EraseCategoryDTO = req.body;
 
-			await categoryService.deleteCategory(admin.id, id);
+			await categoryService.deleteCategory(admin.i, id);
 			return res.status(200).json({
 				message: 'eraseCategoryName: 카테고리 삭제에 성공했습니다.',
 			});
