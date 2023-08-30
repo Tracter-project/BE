@@ -52,16 +52,18 @@ export const articleService = {
 	): Promise<UpdateResult> => {
 		try {
 			const user = await userService.getUserById(userId);
-
-			if (!user) {
-				throw new Error('updateUser: 사용자를 찾을 수 없습니다.');
-			}
-
 			const article = await articleService.getArticleById(id);
 
 			if (!article) {
 				throw new Error('updateArticle: 게시글을 찾을 수 없습니다.');
 			}
+
+			if (user !== null && article.writer !== user.nickname) {
+				throw new Error(
+					'updateArticle: 게시글 작성자만 게시글을 수정할 수 있습니다.'
+				);
+			}
+
 			article.title = title;
 			article.contents = contents;
 
@@ -74,9 +76,16 @@ export const articleService = {
 	deleteArticle: async (userId: number, id: number): Promise<DeleteResult> => {
 		try {
 			const user = await userService.getUserById(userId);
+			const article = await articleService.getArticleById(id);
 
-			if (!user) {
-				throw new Error('updateUser: 사용자를 찾을 수 없습니다.');
+			if (
+				user !== null &&
+				article !== null &&
+				(article.writer !== user.nickname || user.role === 'admin')
+			) {
+				throw new Error(
+					'deleteArticle: 게시글을 삭제할 권한이 없습니다. 게시글 작성자나 관리자만이 게시글을 삭제할 수 있습니다. '
+				);
 			}
 
 			const deleteResult = await Article.delete({ id });
