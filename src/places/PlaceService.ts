@@ -28,12 +28,12 @@ export const placeService = {
 		return await Place.find();
 	},
 	// 카테고리별 숙소 조회
-	getPlacesByCategory: async (id: number) => {
+	getPlacesByCategory: async (category: string) => {
 		try {
 			const placesInCategory = await Place.find({
-				where: { category: { id: id } },
+				where: { category },
 			});
-
+			console.log(placesInCategory, category);
 			return placesInCategory;
 		} catch (error) {
 			throw new Error(error.message);
@@ -52,10 +52,7 @@ export const placeService = {
 				);
 			}
 
-			return await Place.findOne({
-				where: { category: { categoryName } },
-				relations: ['category', 'images'],
-			});
+			return await Place.findOne({ where: { category: categoryName } });
 		} catch (error) {
 			throw new Error(error.message);
 		}
@@ -110,7 +107,7 @@ export const placeService = {
 		placeName: string,
 		price: string,
 		description: string,
-		category: Category,
+		category: string,
 		region: RegionEnum,
 		bannerImage: string,
 		mainImage: string,
@@ -147,7 +144,7 @@ export const placeService = {
 		placeName: string,
 		price: string,
 		description: string,
-		category: Category,
+		category: string,
 		region: RegionEnum,
 		bannerImage: string,
 		mainImage: string,

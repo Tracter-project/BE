@@ -11,17 +11,17 @@ export const articleService = {
 		subject: subjectEnum,
 		title: string,
 		contents: string,
+		writer: string,
 		placeImage: string
 	): Promise<Article> => {
 		try {
 			const isUser = await userService.getUserById(userId);
 
 			if (!isUser) {
-				throw new Error(`createPlace: 관리자만 숙소를 등록할 수 있습니다.`);
+				throw new Error(
+					`createArticle: 로그인한 후 게시글을 등록할 수 있습니다.`
+				);
 			}
-
-			const writer = isUser.nickname;
-			console.log(writer);
 
 			const newArticle: Article = new Article();
 			newArticle.subject = subject;

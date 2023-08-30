@@ -14,6 +14,7 @@ export const userController = {
 		try {
 			const { email, password, nickname }: RegisteUserDTO = req.body;
 			console.log(req.body);
+			console.log(email, password, nickname);
 			if (!email || !password || !nickname) {
 				return res
 					.status(400)

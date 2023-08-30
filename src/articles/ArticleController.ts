@@ -31,14 +31,17 @@ export const articleController = {
 			const { subject, title, contents, placeImage }: RegisteArticleDTO =
 				req.body;
 
+			const writer = user.nickname;
+
 			if (!title) {
 				return res
 					.status(400)
-					.json({ message: 'registeArticle:게시글 제목이 비어져있습니다.' });
+					.json({ message: 'registeArticle: 게시글 제목을 입력해야 합니다.' });
 			}
 			await articleService.createArticle(
-				user,
+				user.id,
 				subject,
+				writer,
 				title,
 				contents,
 				placeImage
@@ -53,16 +56,8 @@ export const articleController = {
 	// 게시글 상세 조회
 	getArticleDetail: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const user = req.cookies;
 			const { id } = req.params;
-			const isUser = await userService.getUserById(user.id);
 			const article = await articleService.getArticleById(Number(id));
-
-			if (!isUser) {
-				return res
-					.status(400)
-					.json({ message: 'getArticleDetail:사용자를 찾을 수 없습니다.' });
-			}
 
 			if (!article) {
 				return res

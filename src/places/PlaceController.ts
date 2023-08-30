@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { placeService } from './PlaceService';
 import { userService } from '../users/UserService';
+
 import {
 	ErasePlaceDTO,
 	RegistePlaceDTO,
@@ -31,17 +32,14 @@ export const placeController = {
 		res: Response
 	): Promise<Response> => {
 		try {
-			const { id } = req.params;
-
-			if (!id) {
+			const { category } = req.params;
+			console.log(category);
+			if (!category) {
 				return res
 					.status(400)
 					.json({ message: '카테고리를 선택하지 않았습니다.' });
 			}
-
-			const placesInCategory = await placeService.getPlacesByCategory(
-				Number(id)
-			);
+			const placesInCategory = await placeService.getPlacesByCategory(category);
 
 			if (placesInCategory.length === 0) {
 				return res
@@ -147,7 +145,7 @@ export const placeController = {
 					placeName,
 					price,
 					description,
-					category,
+					category.categoryName,
 					region,
 					bannerImage,
 					mainImage,
@@ -188,7 +186,7 @@ export const placeController = {
 				placeName,
 				price,
 				description,
-				category,
+				category.categoryName,
 				region,
 				bannerImage,
 				mainImage,

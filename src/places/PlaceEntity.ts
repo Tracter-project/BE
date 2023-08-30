@@ -24,7 +24,7 @@ export class Place extends Base {
 	description: string;
 
 	@Column('varchar', { nullable: false })
-	category: Category;
+	category: string;
 
 	@Column('enum', {
 		enum: RegionEnum,

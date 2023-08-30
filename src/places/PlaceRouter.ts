@@ -5,7 +5,7 @@ import { adminAuth } from '../middlewares/adminAuthMiddleWare';
 
 export const placeRouter: Router = Router();
 
-// 메인페이지 숙소 조회
+// 메인페이지 숙소 조회›
 placeRouter.get('/places', placeController.getMainPlaces);
 // 카테고리별 숙소 조회
 placeRouter.get(

@@ -6,7 +6,4 @@ import { Entity, Column, OneToMany } from 'typeorm';
 export class Category extends Base {
 	@Column('varchar', { nullable: false })
 	categoryName: string;
-
-	@OneToMany(() => Place, place => place.category)
-	places: Place[];
 }

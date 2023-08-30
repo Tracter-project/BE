@@ -30,7 +30,7 @@ export class Article extends Base {
 	@Column('varchar', { nullable: false })
 	title: string;
 
-	@Column('varchar', { nullable: true })
+	@Column('varchar', { nullable: false })
 	contents: string;
 
 	@Column('int', { default: 0 })
