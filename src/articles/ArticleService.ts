@@ -29,6 +29,7 @@ export const articleService = {
 			newArticle.title = title;
 			newArticle.contents = contents;
 			newArticle.placeImage = placeImage;
+			console.log(newArticle);
 			return Article.save(newArticle);
 		} catch (error) {
 			throw new Error(error.message);

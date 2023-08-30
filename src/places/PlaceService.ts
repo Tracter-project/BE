@@ -1,4 +1,4 @@
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult, IsNull, Not, UpdateResult } from 'typeorm';
 import { userService } from '../users/UserService';
 import { Category } from '../categories/CategoryEntity';
 import { Place, RegionEnum } from './PlaceEntity';
@@ -24,8 +24,13 @@ export const placeService = {
 		return await Place.findOne({ where: { id } });
 	},
 	// 숙소 전체 조회
-	getAllPlaceName: async (): Promise<Place[]> => {
-		return await Place.find();
+	getAllPlaceName: async (): Promise<Place[] | null> => {
+		try {
+			const allPlaces = await Place.find();
+			return allPlaces;
+		} catch (error) {
+			throw new Error(error.message);
+		}
 	},
 	// 카테고리별 숙소 조회
 	getPlacesByCategory: async (category: string) => {
@@ -33,7 +38,6 @@ export const placeService = {
 			const placesInCategory = await Place.find({
 				where: { category },
 			});
-			console.log(placesInCategory, category);
 			return placesInCategory;
 		} catch (error) {
 			throw new Error(error.message);

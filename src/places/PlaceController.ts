@@ -72,8 +72,8 @@ export const placeController = {
 	// 전체 숙소 조회
 	getTotalPlaces: async (req: Request, res: Response): Promise<Response> => {
 		try {
+			console.log('asd');
 			const allPlaces = await placeService.getAllPlaceName();
-
 			if (!allPlaces || allPlaces.length === 0) {
 				return res
 					.status(400)

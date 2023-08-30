@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { tokenAuth } from '../middlewares/tokenAuthMiddleWare';
 import { userController } from './UserController';
+import { adminAuth } from 'src/middlewares/adminAuthMiddleWare';
 
 export const userRouter: Router = Router();
 
@@ -18,3 +19,6 @@ userRouter.get('/users', tokenAuth, userController.getUserInformation);
 userRouter.patch('/users', tokenAuth, userController.updateProfile);
 // 회원 탈퇴 (인증 필요)
 userRouter.delete('/users', tokenAuth, userController.withdrawUser);
+
+// 관리자 인증 (관리자 인증 필요 --> 생각나는대라)
+// userRouter.get('/admin', tokenAuth, adminAuth);

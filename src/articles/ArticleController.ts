@@ -28,9 +28,10 @@ export const articleController = {
 	registeArticle: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const user = req.cookies;
-			const { subject, title, contents, placeImage }: RegisteArticleDTO =
+			const { subject, title, content, placeImage }: RegisteArticleDTO =
 				req.body;
 
+			console.log(req.body);
 			const writer = user.nickname;
 
 			if (!title) {
@@ -41,9 +42,9 @@ export const articleController = {
 			await articleService.createArticle(
 				user.id,
 				subject,
-				writer,
 				title,
-				contents,
+				content,
+				writer,
 				placeImage
 			);
 			return res
@@ -56,8 +57,8 @@ export const articleController = {
 	// 게시글 상세 조회
 	getArticleDetail: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { id } = req.params;
-			const article = await articleService.getArticleById(Number(id));
+			const { articleId } = req.params;
+			const article = await articleService.getArticleById(Number(articleId));
 
 			if (!article) {
 				return res
