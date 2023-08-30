@@ -1,10 +1,28 @@
 {
 	"compilerOptions": {
-		"target": "es6", // ECMAScript에서 어떤 버전을 쓸 것인지를 정의.
+		"target": "ES6", // ECMAScript에서 어떤 버전을 쓸 것인지를 정의.
 		"module": "commonjs",
+		"lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+		"skipLibCheck": true,
+		"sourceMap": true,
 		"outDir": "dist", // .ts가 변환되어 생성된 .js들은 "dist" 디렉토리에 저장됨
 		"moduleResolution": "node", // node.js의 모듈 해석 방식을 사용함
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"removeComments": true,
+		"noImplicitAny": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"noImplicitReturns": true,
+		"noFallthroughCasesInSwitch": true,
+		"allowSyntheticDefaultImports": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"resolveJsonModule": true,
+		"baseUrl": "."
 	},
-	"lib": ["es2015"]
+	"exclude": ["node_modules"],
+	"include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }
