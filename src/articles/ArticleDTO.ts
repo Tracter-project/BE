@@ -4,7 +4,7 @@ export class RegisteArticleDTO {
 	subject: subjectEnum;
 	writer: string;
 	title: string;
-	content: string;
+	contents: string;
 	placeImage: string;
 }
 export class UpdateArticleDTO {
