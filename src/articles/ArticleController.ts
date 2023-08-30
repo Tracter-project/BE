@@ -28,7 +28,7 @@ export const articleController = {
 	registeArticle: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const user = req.cookies;
-			const { subject, title, content, placeImage }: RegisteArticleDTO =
+			const { subject, title, contents, placeImage }: RegisteArticleDTO =
 				req.body;
 
 			console.log(req.body);
@@ -43,7 +43,7 @@ export const articleController = {
 				user.id,
 				subject,
 				title,
-				content,
+				contents,
 				writer,
 				placeImage
 			);

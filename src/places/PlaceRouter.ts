@@ -23,7 +23,6 @@ placeRouter.delete('/places/likes', tokenAuth, (req, res) =>
 placeRouter.get('/places/all', placeController.getTotalPlaces);
 // 숙소 상세 조회
 placeRouter.get('/places/:placeId', placeController.getPlaceDetail);
-
 // 숙소 등록 (관리자 인증 필요)
 placeRouter.post(
 	'/admin/places',

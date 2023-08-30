@@ -12,6 +12,7 @@ export const tokenAuth = async (
 ): Promise<void> => {
 	try {
 		const { token } = req.body;
+
 		if (!token) {
 			throw new Error('토큰이 없습니다.');
 		}
