@@ -3,6 +3,7 @@ import { commentService } from './CommentService';
 import {
 	EraseCommentDTO,
 	RegisteCommentDTO,
+	SeactchCommentDTO,
 	UpdateCommentDTO,
 } from './CommentDTO';
 
@@ -50,6 +51,19 @@ export const commentController = {
 			return res
 				.status(201)
 				.json({ message: 'registeComment: 댓글이 삭제되었습니다.' });
+		} catch (error) {
+			return res.status(500).json({ error: error.message });
+		}
+	},
+	// 댓글 조회
+	searchComment: async (req: Request, res: Response): Promise<Response> => {
+		try {
+			const { articleId }: SeactchCommentDTO = req.body;
+
+			await commentService.getCommentByArticleId(articleId);
+			return res
+				.status(200)
+				.json({ message: 'registeComment: 댓글을 조회했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

@@ -6,7 +6,7 @@ import { Base } from '../entities/BaseEntity';
 export class Comment extends Base {
 	@ManyToOne(() => Article, article => article.comments)
 	@JoinColumn()
-	articleId: Article;
+	article: Article;
 
 	@Column('varchar', { nullable: false })
 	writer: string;

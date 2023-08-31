@@ -74,6 +74,7 @@ export const placeController = {
 		try {
 			console.log('asd');
 			const allPlaces = await placeService.getAllPlaceName();
+			console.log(allPlaces, allPlaces?.length);
 			if (!allPlaces || allPlaces.length === 0) {
 				return res
 					.status(400)
