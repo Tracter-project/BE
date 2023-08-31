@@ -143,8 +143,6 @@ export const placeService = {
 			newPlace.detailImage = detailImage;
 			newPlace.bookingURL = bookingURL;
 
-			console.log('2 : ', newPlace);
-
 			return Place.save(newPlace);
 		} catch (error) {
 			throw new Error(error.message);
@@ -176,6 +174,12 @@ export const placeService = {
 			if (!place) {
 				throw new Error('updatePlace: 게시글을 찾을 수 없습니다.');
 			}
+
+			const isCategory = await categoryService.getCateogryByName(category);
+			if (isCategory.length === 0) {
+				throw new Error('createPlace: 올바른 카테고리가 아닙니다.');
+			}
+
 			place.placeName = placeName;
 			place.price = price;
 			place.description = description;
