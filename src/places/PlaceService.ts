@@ -82,11 +82,11 @@ export const placeService = {
 				where: { user: { id: user.id }, place: { id: place.id } },
 			});
 
-			if (like && userLikedPlace) {
+			if (like && userLikedPlace.length) {
 				throw new Error('likePlace: 이미 좋아요한 숙소입니다.');
 			}
 
-			if (!like && !userLikedPlace) {
+			if (!like && !userLikedPlace.length) {
 				throw new Error('likePlace: 이미 좋아요 취소한 숙소입니다.');
 			}
 

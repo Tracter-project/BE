@@ -98,7 +98,6 @@ export const placeController = {
 		try {
 			const user = req.cookies;
 			const { placeId }: LikePlacesDTO = req.body;
-
 			const likeUser = await userService.getUserById(user.id);
 			const place = await placeService.getPlaceById(placeId);
 

@@ -8,6 +8,7 @@ import {
 	EraseArticleDTO,
 	LikeArticlesDTO,
 } from './ArticleDTO';
+import { UserLikeArticles } from '../entities/UserLikeArticlesEntity';
 
 export const articleController = {
 	// 게시글 전체 조회
@@ -66,7 +67,7 @@ export const articleController = {
 					.status(400)
 					.json({ message: 'getArticleDetail: 게시글을 찾을 수 없습니다.' });
 			}
-
+			UserLikeArticles.find();
 			const comment = await commentService.getCommentByArticleId(
 				Number(articleId)
 			);
@@ -105,7 +106,7 @@ export const articleController = {
 			return res.status(500).json({ error: error.message });
 		}
 	},
-	// 숙소 좋아요 처리
+	// 게시글 좋아요 처리
 	handleLikeArticles: async (
 		req: Request,
 		res: Response,
@@ -115,21 +116,22 @@ export const articleController = {
 			const user = req.cookies;
 			const { articleId }: LikeArticlesDTO = req.body;
 
-			const likeUser = await userService.getUserById(user.id);
 			const article = await articleService.getArticleById(articleId);
 
-			if (!likeUser || !article) {
+			if (!user || !article) {
 				return res.status(400).json({
 					message:
-						'unlikeArticles: 숙소 좋아요 처리에 필요한 정보가 부족합니다.',
+						'unlikeArticles: 게시글 좋아요 처리에 필요한 정보가 부족합니다.',
 				});
 			}
 
-			await articleService.likeArticle(likeUser, article, like);
+			await articleService.likeArticle(user, article, like);
 
-			return res
-				.status(200)
-				.json({ message: `숙소 좋아요 처리에 성공했습니다.` });
+			const message = like
+				? '게시글 좋아요에 성공했습니다.'
+				: '게시글 좋아요 취소에 성공했습니다.';
+
+			return res.status(200).json({ message });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

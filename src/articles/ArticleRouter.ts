@@ -15,10 +15,10 @@ articleRouter.patch('/articles', tokenAuth, articleController.updateArticle);
 // 게시글 삭제 (인증 필요)
 articleRouter.delete('/articles', tokenAuth, articleController.eraseArticle);
 // 숙소 좋아요 (인증 필요)
-articleRouter.post('/places/likes', tokenAuth, (req, res) =>
+articleRouter.post('/articles/likes', tokenAuth, (req, res) =>
 	articleController.handleLikeArticles(req, res, true)
 );
 // 숙소 좋아요 취소 (인증 필요)
-articleRouter.delete('/places/likes', tokenAuth, (req, res) =>
+articleRouter.delete('/articles/likes', tokenAuth, (req, res) =>
 	articleController.handleLikeArticles(req, res, false)
 );
