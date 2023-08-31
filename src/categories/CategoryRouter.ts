@@ -10,8 +10,8 @@ categoryRouter.get('/categories', categoryController.getAllCategoryName);
 // 카테고리 등록 (관리자 인증 필요)
 categoryRouter.post(
 	'/admin/categories',
-	// tokenAuth,
-	// adminAuth,
+	tokenAuth,
+	adminAuth,
 	categoryController.registeCategoryName
 );
 // 카레고리 수정 (관리자 인증 필요)

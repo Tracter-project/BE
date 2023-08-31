@@ -183,6 +183,34 @@ export const placeController = {
 				bookingURL,
 			}: UpdatePlaceDTO = req.body;
 
+			console.log(
+				admin,
+				id,
+				placeName,
+				price,
+				description,
+				category,
+				region,
+				bannerImage,
+				mainImage,
+				detailImage,
+				bookingURL
+			);
+			console.log(req.body);
+			if (
+				!placeName ||
+				!price ||
+				!description ||
+				!category ||
+				!region ||
+				!mainImage ||
+				!bookingURL
+			) {
+				return res
+					.status(400)
+					.json({ message: 'registPlace:누락된 값이 있습니다.' });
+			}
+
 			await placeService.updatePlace(
 				admin.id,
 				id,
