@@ -99,7 +99,7 @@ export const articleService = {
 			throw new Error(error.message);
 		}
 	},
-	// 좋아요 카운트 수정
+	// 게시 좋아요 카운트 수정
 	updateLikeArticleCounter: async (
 		article: Article,
 		increment: number
@@ -112,22 +112,23 @@ export const articleService = {
 		}
 	},
 
-	// 장소 좋아요 또는 좋아요 취소
+	// 게시글 좋아요 또는 좋아요 취소
 	likeArticle: async (
 		likeUser: User,
 		article: Article,
 		like: boolean
 	): Promise<void> => {
 		try {
+			console.log('게시글');
 			const userLikedArticle = await UserLikeArticles.find({
 				where: { user: { id: likeUser.id }, article: { id: article.id } },
 			});
 
-			if (like && userLikedArticle) {
+			if (like && userLikedArticle.length) {
 				throw new Error('이미 좋아요한 게시글입니다.');
 			}
 
-			if (!like && !userLikedArticle) {
+			if (!like && !userLikedArticle.length) {
 				throw new Error('이미 좋아요 취소한 게시글입니다.');
 			}
 
