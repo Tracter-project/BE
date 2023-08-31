@@ -29,7 +29,6 @@ export const articleService = {
 			newArticle.title = title;
 			newArticle.contents = contents;
 			newArticle.placeImage = placeImage;
-			console.log(newArticle);
 			return Article.save(newArticle);
 		} catch (error) {
 			throw new Error(error.message);
@@ -119,7 +118,6 @@ export const articleService = {
 		like: boolean
 	): Promise<void> => {
 		try {
-			console.log('게시글');
 			const userLikedArticle = await UserLikeArticles.find({
 				where: { user: { id: likeUser.id }, article: { id: article.id } },
 			});

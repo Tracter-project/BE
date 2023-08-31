@@ -33,7 +33,6 @@ export const commentService = {
 			newComment.article = article;
 			newComment.comment = comment;
 			newComment.writer = isUser.nickname;
-			console.log('newComment : ', newComment);
 			return Comment.save(newComment);
 		} catch (error) {
 			throw new Error(error.message);
