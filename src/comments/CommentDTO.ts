@@ -11,3 +11,7 @@ export class UpdateCommentDTO {
 export class EraseCommentDTO {
 	id: number;
 }
+
+export class SeactchCommentDTO {
+	articleId: number;
+}
