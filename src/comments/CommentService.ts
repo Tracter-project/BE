@@ -1,6 +1,7 @@
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { Comment } from './CommentEntity';
 import { userService } from '../users/UserService';
+import { articleService } from '../articles/ArticleService';
 
 export const commentService = {
 	// 댓글 작성
@@ -23,9 +24,16 @@ export const commentService = {
 				throw new Error('createComment: 댓글이 존재하지 않습니다.');
 			}
 
-			// newComment.article =
+			const article = await articleService.getArticleById(articleId);
+
+			if (!article) {
+				throw new Error('');
+			}
+
+			newComment.article = article;
 			newComment.comment = comment;
 			newComment.writer = isUser.nickname;
+			console.log('newComment : ', newComment);
 			return Comment.save(newComment);
 		} catch (error) {
 			throw new Error(error.message);
