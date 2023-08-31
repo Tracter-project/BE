@@ -121,7 +121,6 @@ export const placeService = {
 	): Promise<Place> => {
 		try {
 			const isAdmin = await userService.getUserById(userId);
-
 			if (!isAdmin) {
 				throw new Error(`createPlace: 관리자만 숙소를 등록할 수 있습니다.`);
 			}
@@ -164,13 +163,11 @@ export const placeService = {
 	): Promise<UpdateResult> => {
 		try {
 			const isAdmin = await userService.getUserById(userId);
-
 			if (!isAdmin) {
 				throw new Error(`updatePlace: 관리자만 숙소를 수정할 수 있습니다.`);
 			}
 
 			const place = await placeService.getPlaceById(id);
-
 			if (!place) {
 				throw new Error('updatePlace: 게시글을 찾을 수 없습니다.');
 			}
@@ -183,7 +180,7 @@ export const placeService = {
 			place.placeName = placeName;
 			place.price = price;
 			place.description = description;
-			place.category = category;
+			place.category = isCategory[0].categoryName;
 			place.region = region;
 			place.bannerImage = bannerImage;
 			place.mainImage = mainImage;
