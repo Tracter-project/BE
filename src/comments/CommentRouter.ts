@@ -11,4 +11,4 @@ commentRouter.patch('/comments', tokenAuth, commentController.updateComment);
 // 댓글 삭제 (인증 필요)
 commentRouter.delete('/comments', tokenAuth, commentController.eraseComment);
 // 댓글 조회 (인증 필요)
-commentRouter.get('/comments', tokenAuth, commentController.searchComment);
+commentRouter.get('/comments', commentController.searchComment);
