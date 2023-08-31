@@ -129,36 +129,32 @@ export const placeController = {
 				detailImage,
 				bookingURL,
 			}: RegistePlaceDTO = req.body;
-
 			if (
 				!placeName ||
 				!price ||
 				!description ||
 				!category ||
 				!region ||
-				!bannerImage ||
 				!mainImage ||
-				!detailImage ||
 				!bookingURL
 			) {
-				await placeService.createPlace(
-					admin.id,
-					placeName,
-					price,
-					description,
-					category.categoryName,
-					region,
-					bannerImage,
-					mainImage,
-					detailImage,
-					bookingURL
-				);
 				return res
 					.status(400)
 					.json({ message: 'registPlace:누락된 값이 있습니다.' });
 			}
 
-			console.log(category.categoryName);
+			await placeService.createPlace(
+				admin.id,
+				placeName,
+				price,
+				description,
+				category,
+				region,
+				bannerImage,
+				mainImage,
+				detailImage,
+				bookingURL
+			);
 
 			return res
 				.status(201)

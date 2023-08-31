@@ -1,9 +1,10 @@
-import { DeleteResult, IsNull, Not, UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 import { userService } from '../users/UserService';
 import { Category } from '../categories/CategoryEntity';
 import { Place, RegionEnum } from './PlaceEntity';
 import { User } from '../users/UserEntity';
 import { UserLikePlaces } from '../entities/UserLikePlacesEntity';
+import { categoryService } from '../categories/CategoryService';
 
 export const placeService = {
 	// 숙소 검색(order createAt)
@@ -82,11 +83,11 @@ export const placeService = {
 			});
 
 			if (like && userLikedPlace) {
-				throw new Error('이미 좋아요한 숙소입니다.');
+				throw new Error('likePlace: 이미 좋아요한 숙소입니다.');
 			}
 
 			if (!like && !userLikedPlace) {
-				throw new Error('이미 좋아요 취소한 숙소입니다.');
+				throw new Error('likePlace: 이미 좋아요 취소한 숙소입니다.');
 			}
 
 			if (like) {
@@ -125,16 +126,24 @@ export const placeService = {
 				throw new Error(`createPlace: 관리자만 숙소를 등록할 수 있습니다.`);
 			}
 
+			const isCategory = await categoryService.getCateogryByName(category);
+			if (isCategory.length === 0) {
+				throw new Error('createPlace: 올바른 카테고리가 아닙니다.');
+			}
+
 			const newPlace: Place = new Place();
+
 			newPlace.placeName = placeName;
 			newPlace.price = price;
 			newPlace.description = description;
-			newPlace.category = category;
+			newPlace.category = isCategory[0].categoryName;
 			newPlace.region = region;
 			newPlace.bannerImage = bannerImage;
 			newPlace.mainImage = mainImage;
 			newPlace.detailImage = detailImage;
 			newPlace.bookingURL = bookingURL;
+
+			console.log('2 : ', newPlace);
 
 			return Place.save(newPlace);
 		} catch (error) {
