@@ -7,10 +7,15 @@ export const categoryService = {
 	isDuplicateCategoryName: async (categoryName: string): Promise<boolean> => {
 		return (await Category.findOne({ where: { categoryName } })) ? true : false;
 	},
-	// 카테고리 검색
+	// 카테고리 검색(ID)
 	getCategoryById: async (id: number): Promise<Category | null> => {
 		return await Category.findOne({ where: { id } });
 	},
+	// 카테고리 검색 (categoryName)
+	getCateogryByName: async (categoryName: string): Promise<Category[]> => {
+		return await Category.find({ where: { categoryName } });
+	},
+
 	// 카테고리 전체 조회
 	getAllCategoryName: async (): Promise<Category[]> => {
 		return await Category.find();
