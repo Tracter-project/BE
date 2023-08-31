@@ -18,7 +18,7 @@ export class UpdatePlaceDTO {
 	placeName: string;
 	price: string;
 	description: string;
-	category: Category;
+	category: string;
 	region: RegionEnum;
 	bannerImage: string;
 	mainImage: string;
