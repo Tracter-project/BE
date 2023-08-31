@@ -183,20 +183,6 @@ export const placeController = {
 				bookingURL,
 			}: UpdatePlaceDTO = req.body;
 
-			console.log(
-				admin,
-				id,
-				placeName,
-				price,
-				description,
-				category,
-				region,
-				bannerImage,
-				mainImage,
-				detailImage,
-				bookingURL
-			);
-			console.log(req.body);
 			if (
 				!placeName ||
 				!price ||
@@ -217,7 +203,7 @@ export const placeController = {
 				placeName,
 				price,
 				description,
-				category.categoryName,
+				category,
 				region,
 				bannerImage,
 				mainImage,
