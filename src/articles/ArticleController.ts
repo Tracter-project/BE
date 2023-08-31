@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { articleService } from './ArticleService';
 import { userService } from '../users/UserService';
+import { commentService } from '../comments/CommentService';
 import {
 	RegisteArticleDTO,
 	UpdateArticleDTO,
@@ -65,6 +66,11 @@ export const articleController = {
 					.status(400)
 					.json({ message: 'getArticleDetail: 게시글을 찾을 수 없습니다.' });
 			}
+
+			const comment = await commentService.getCommentByArticleId(
+				Number(articleId)
+			);
+
 			return res.status(200).json(article);
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
