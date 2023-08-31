@@ -36,7 +36,7 @@ export const commentController = {
 			await commentService.updateComment(user.id, id, comment);
 			return res
 				.status(201)
-				.json({ message: 'registeComment: 댓글이 수정되었습니다.' });
+				.json({ message: 'updateComment: 댓글이 수정되었습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

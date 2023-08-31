@@ -44,7 +44,7 @@ export const commentService = {
 		userId: number,
 		id: number,
 		comment: string
-	): Promise<UpdateResult> => {
+	): Promise<Comment> => {
 		try {
 			const isUser = await userService.getUserById(userId);
 			const updateComment = await commentService.getCommentById(id);
@@ -61,7 +61,7 @@ export const commentService = {
 
 			updateComment.comment = comment;
 
-			return Comment.update({ id }, { comment });
+			return Comment.save(updateComment);
 		} catch (error) {
 			throw new Error(error.message);
 		}
