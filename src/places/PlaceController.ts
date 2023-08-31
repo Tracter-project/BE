@@ -157,6 +157,9 @@ export const placeController = {
 					.status(400)
 					.json({ message: 'registPlace:누락된 값이 있습니다.' });
 			}
+
+			console.log(category.categoryName);
+
 			return res
 				.status(201)
 				.json({ message: 'registePlace:숙소가 등록되었습니다.' });
