@@ -56,10 +56,7 @@ export const placeController = {
 	getPlaceDetail: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const { placeId } = req.params;
-			console.log('1 : ', placeId);
-			console.log('2 : ', req.params);
 			const place = await placeService.getPlaceById(Number(placeId));
-			console.log('3 : ', place);
 
 			if (!place) {
 				return res
@@ -67,7 +64,7 @@ export const placeController = {
 					.json({ message: 'getPlaceDetail: 숙소 페이지를 찾을 수 없습니다.' });
 			}
 
-			return res.status(200).json(200).json({ place });
+			return res.status(200).json({ place });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
