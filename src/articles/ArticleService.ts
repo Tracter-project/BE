@@ -75,13 +75,13 @@ export const articleService = {
 	// 게시글 삭제
 	deleteArticle: async (userId: number, id: number): Promise<DeleteResult> => {
 		try {
-			const IsUser = await userService.getUserById(userId);
+			const isUser = await userService.getUserById(userId);
 			const article = await articleService.getArticleById(id);
 
 			if (
-				IsUser !== null &&
+				isUser !== null &&
 				article !== null &&
-				(article.writer !== IsUser.nickname || IsUser.role === 'admin')
+				(article.writer !== isUser.nickname || isUser.role === 'admin')
 			) {
 				throw new Error(
 					'deleteArticle: 게시글을 삭제할 권한이 없습니다. 게시글 작성자나 관리자만이 게시글을 삭제할 수 있습니다. '

@@ -84,22 +84,6 @@ export const commentService = {
 			throw new Error(error.message);
 		}
 	},
-	// // 댓글 조회
-	// searchComment: async (userId:number, articleId: number, id: number): Promise<void> => {
-	// 	try {
-	// 		const isUser = await userService.getUserById(userId);
-	// 		const searchComment = await commentService.getCommentByArticleId(articleId);
-
-	// 		if(!searchComment) {
-	// 			throw new Error('searchComment: 댓글을 찾을 수 없습니다.');
-	// 		}
-
-	// 		const searchComment =
-
-	// 	} catch (error) {
-	// 		throw new Error(error.message);
-	// 	}
-	// },
 
 	// 댓글 조회(id)
 	getCommentById: async (id: number): Promise<Comment | null> => {
