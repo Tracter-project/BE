@@ -55,8 +55,11 @@ export const placeController = {
 	// 숙소 상세 조회
 	getPlaceDetail: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { id } = req.params;
-			const place = await placeService.getPlaceById(Number(id));
+			const { placeId } = req.params;
+			console.log('1 : ', placeId);
+			console.log('2 : ', req.params);
+			const place = await placeService.getPlaceById(Number(placeId));
+			console.log('3 : ', place);
 
 			if (!place) {
 				return res
