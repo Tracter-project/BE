@@ -23,6 +23,7 @@ export const commentService = {
 				throw new Error('createComment: 댓글이 존재하지 않습니다.');
 			}
 
+			// newComment.article =
 			newComment.comment = comment;
 			newComment.writer = isUser.nickname;
 			return Comment.save(newComment);
