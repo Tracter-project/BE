@@ -1,4 +1,3 @@
-import { Category } from '../categories/CategoryEntity';
 import { RegionEnum } from './PlaceEntity';
 
 export class RegistePlaceDTO {

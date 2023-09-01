@@ -17,10 +17,12 @@ export const categoryController = {
 
 			if (!allCategories) {
 				return res.status(400).json({
-					message: 'getCategoryNameList: 카테고리가 없습니다.',
+					message: '카테고리를 찾을 수 없습니다.',
 				});
 			}
-			return res.status(200).json(allCategories);
+			return res
+				.status(200)
+				.json({ message: '카테고리 조회에 성공했습니다.', allCategories });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

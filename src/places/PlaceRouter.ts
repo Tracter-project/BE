@@ -5,13 +5,18 @@ import { adminAuth } from '../middlewares/adminAuthMiddleWare';
 
 export const placeRouter: Router = Router();
 
-// 메인페이지 숙소 조회›
+// 메인페이지 숙소 조회
 placeRouter.get('/places', placeController.getMainPlaces);
 // 카테고리별 숙소 조회
 placeRouter.get(
 	'/places/categories/:category',
 	placeController.getPlacesByCategory
-); // 숙소 좋아요 (인증 필요)
+);
+/// 전체 숙소 조회
+placeRouter.get('/places/all', placeController.getTotalPlaces);
+// 숙소 상세페이지 조회
+placeRouter.get('/places/:placeId', placeController.getPlaceDetail);
+// 숙소 좋아요 (인증 필요)
 placeRouter.post('/places/likes', tokenAuth, (req, res) =>
 	placeController.handleLikePlaces(req, res, true)
 );
@@ -19,10 +24,6 @@ placeRouter.post('/places/likes', tokenAuth, (req, res) =>
 placeRouter.delete('/places/likes', tokenAuth, (req, res) =>
 	placeController.handleLikePlaces(req, res, false)
 );
-/// 전체 숙소 조회
-placeRouter.get('/places/all', placeController.getTotalPlaces);
-// 숙소 상세 조회
-placeRouter.get('/places/:placeId', placeController.getPlaceDetail);
 // 숙소 등록 (관리자 인증 필요)
 placeRouter.post(
 	'/admin/places',

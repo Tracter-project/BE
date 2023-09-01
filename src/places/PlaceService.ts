@@ -53,9 +53,7 @@ export const placeService = {
 			const category = await Category.findOne({ where: { categoryName } });
 
 			if (!category) {
-				throw new Error(
-					'getPlaceByCategoryName: 해당 카테고리가 존재하지 않습니다.'
-				);
+				throw new Error('해당 카테고리가 존재하지 않습니다.');
 			}
 
 			return await Place.findOne({ where: { category: categoryName } });
@@ -84,11 +82,11 @@ export const placeService = {
 			});
 
 			if (like && userLikedPlace.length) {
-				throw new Error('likePlace: 이미 좋아요한 숙소입니다.');
+				throw new Error('이미 좋아요한 숙소입니다.');
 			}
 
 			if (!like && !userLikedPlace.length) {
-				throw new Error('likePlace: 이미 좋아요 취소한 숙소입니다.');
+				throw new Error('이미 좋아요 취소한 숙소입니다.');
 			}
 
 			if (like) {
@@ -99,7 +97,7 @@ export const placeService = {
 				await UserLikePlaces.save(userLike);
 				await placeService.updateLikePlaceCounter(place, 1);
 			} else {
-				UserLikePlaces.remove(userLikedPlace);
+				await UserLikePlaces.remove(userLikedPlace);
 				await placeService.updateLikePlaceCounter(place, -1);
 			}
 		} catch (error) {
@@ -123,12 +121,12 @@ export const placeService = {
 		try {
 			const isAdmin = await userService.getUserById(userId);
 			if (!isAdmin) {
-				throw new Error(`createPlace: 관리자만 숙소를 등록할 수 있습니다.`);
+				throw new Error(`관리자만 숙소를 등록할 수 있습니다.`);
 			}
 
 			const isCategory = await categoryService.getCateogryByName(category);
 			if (isCategory.length === 0) {
-				throw new Error('createPlace: 올바른 카테고리가 아닙니다.');
+				throw new Error('올바른 카테고리가 아닙니다.');
 			}
 
 			const newPlace: Place = new Place();
@@ -165,16 +163,16 @@ export const placeService = {
 		try {
 			const isAdmin = await userService.getUserById(userId);
 			if (!isAdmin) {
-				throw new Error(`updatePlace: 관리자만 숙소를 수정할 수 있습니다.`);
+				throw new Error(`관리자만 숙소를 수정할 수 있습니다.`);
 			}
 			const place = await placeService.getPlaceById(id);
 			if (!place) {
-				throw new Error('updatePlace: 게시글을 찾을 수 없습니다.');
+				throw new Error('게시글을 찾을 수 없습니다.');
 			}
 
 			const isCategory = await categoryService.getCateogryByName(category);
 			if (isCategory.length === 0) {
-				throw new Error('createPlace: 올바른 카테고리가 아닙니다.');
+				throw new Error('올바른 카테고리가 아닙니다.');
 			}
 
 			place.placeName = placeName;
@@ -210,13 +208,13 @@ export const placeService = {
 			const isAdmin = await userService.getUserById(userId);
 
 			if (!isAdmin) {
-				throw new Error(`updatePlace: 관리자만 숙소를 삭제할 수 있습니다.`);
+				throw new Error(`관리자만 숙소를 삭제할 수 있습니다.`);
 			}
 
 			const DeleteResult = await Place.delete({ id });
 
 			if (DeleteResult.affected === 0) {
-				throw new Error('deletePlace: 삭제할 숙소가 존재하지 않습니다.');
+				throw new Error('삭제할 숙소가 존재하지 않습니다.');
 			}
 			return DeleteResult;
 		} catch (error) {
