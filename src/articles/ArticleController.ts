@@ -20,9 +20,7 @@ export const articleController = {
 					message: '게시글을 전체 조회할 수 없습니다.',
 				});
 			}
-			return res
-				.status(200)
-				.json({ message: '게시글 목록 조회에 성공했습니다.', allArticle });
+			return res.status(200).json(allArticle);
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
