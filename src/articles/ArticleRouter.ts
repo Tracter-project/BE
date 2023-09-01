@@ -14,11 +14,11 @@ articleRouter.post('/articles', tokenAuth, articleController.registeArticle);
 articleRouter.patch('/articles', tokenAuth, articleController.updateArticle);
 // 게시글 삭제 (인증 필요)
 articleRouter.delete('/articles', tokenAuth, articleController.eraseArticle);
-// 숙소 좋아요 (인증 필요)
+// 게시글 좋아요 (인증 필요)
 articleRouter.post('/articles/likes', tokenAuth, (req, res) =>
 	articleController.handleLikeArticles(req, res, true)
 );
-// 숙소 좋아요 취소 (인증 필요)
+// 게시글 좋아요 취소 (인증 필요)
 articleRouter.delete('/articles/likes', tokenAuth, (req, res) =>
 	articleController.handleLikeArticles(req, res, false)
 );

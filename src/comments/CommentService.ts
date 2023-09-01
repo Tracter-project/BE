@@ -19,7 +19,7 @@ export const commentService = {
 
 			const newComment: Comment = new Comment();
 			if (!articleId) {
-				throw new Error('댓글이 존재하지 않습니다.');
+				throw new Error('게시글이 존재하지 않습니다.');
 			}
 
 			const article = await articleService.getArticleById(articleId);
@@ -71,8 +71,11 @@ export const commentService = {
 				throw new Error('수정할 댓글을 찾을 수 없습니다.');
 			}
 
-			if (isUser !== null && isUser.nickname !== deleteComment.writer) {
-				throw new Error('댓글 작성자가 아니라 댓글을 삭제할 수 없습니다.');
+			if (
+				isUser !== null &&
+				(isUser.nickname !== deleteComment.writer || isUser.role === 'admin')
+			) {
+				throw new Error('댓글 작성자와 관리자만 댓글을 삭제할 수 있습니다.');
 			}
 
 			const deleteResult = await Comment.delete({ id });
