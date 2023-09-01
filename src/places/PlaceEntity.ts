@@ -36,16 +36,16 @@ export class Place extends Base {
 	@Column('int', { default: 0 })
 	placeLikeCount: number;
 
-	@Column('varchar', { nullable: true })
+	@Column('text', { nullable: true })
 	bannerImage: string;
 
-	@Column('varchar', { nullable: false })
+	@Column('text', { nullable: false })
 	mainImage: string;
 
 	@Column('simple-array', { nullable: true })
 	detailImage: string[];
 
-	@Column('varchar', { nullable: false })
+	@Column('text', { nullable: false })
 	bookingURL: string;
 
 	@OneToMany(() => Image, image => image.place)
