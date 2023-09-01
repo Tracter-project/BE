@@ -77,7 +77,7 @@ export const placeController = {
 
 			if (!place) {
 				return res
-					.status(404)
+					.status(400)
 					.json({ message: '숙소 페이지를 찾을 수 없습니다.' });
 			}
 
