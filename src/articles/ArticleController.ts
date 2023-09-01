@@ -39,9 +39,7 @@ export const articleController = {
 				Number(articleId)
 			);
 
-			return res
-				.status(200)
-				.json({ message: '게시글 상세조회에 성공했습니다.', article, comment });
+			return res.status(200).json(article);
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
