@@ -20,9 +20,7 @@ export const categoryController = {
 					message: '카테고리를 찾을 수 없습니다.',
 				});
 			}
-			return res
-				.status(200)
-				.json({ message: '카테고리 조회에 성공했습니다.', allCategories });
+			return res.status(200).json(allCategories);
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
