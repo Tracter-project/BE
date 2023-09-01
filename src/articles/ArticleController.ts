@@ -33,7 +33,6 @@ export const articleController = {
 			const { subject, title, contents, placeImage }: RegisteArticleDTO =
 				req.body;
 
-			console.log(req.body);
 			const writer = user.nickname;
 
 			if (!title) {

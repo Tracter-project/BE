@@ -19,8 +19,6 @@ export const tokenAuth = async (
 
 		const decodedToken = jwt.verify(token, process.env.SECRET_KEY as string);
 
-		console.log(decodedToken);
-
 		if (!decodedToken) {
 			throw new Error('토큰 디코드가 이루어지지 않았거나 유효하지 않습니다.');
 		}
