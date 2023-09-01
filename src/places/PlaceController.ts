@@ -61,11 +61,6 @@ export const placeController = {
 	getTotalPlaces: async (req: Request, res: Response): Promise<Response> => {
 		try {
 			const allPlaces = await placeService.getAllPlaceName();
-			if (!allPlaces || allPlaces.length === 0) {
-				return res
-					.status(404)
-					.json({ message: '전체 숙소를 조회할 수 없습니다.' });
-			}
 
 			return res
 				.status(200)
