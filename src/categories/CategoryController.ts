@@ -37,15 +37,11 @@ export const categoryController = {
 			const { categoryName }: RegisteCategoryDTO = req.body;
 
 			if (!categoryName) {
-				return res
-					.status(400)
-					.json({ message: 'createCategory:category 값을 없습니다.' });
+				return res.status(400).json({ message: 'category 값이 없습니다.' });
 			}
 
 			await categoryService.createCategory(admin.id, categoryName);
-			return res
-				.status(201)
-				.json({ message: 'createCategory: 카테고리 등록이 완료되었습니다.' });
+			return res.status(201).json({ message: '카테고리 등록에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -62,7 +58,7 @@ export const categoryController = {
 			await categoryService.updateCategory(admin.id, id, updateCategoryName);
 
 			return res.status(200).json({
-				message: 'updateCategoryName: 카테고리 정보 수정에 성공했습니다.',
+				message: '카테고리 수정에 성공했습니다.',
 			});
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
