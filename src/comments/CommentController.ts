@@ -3,7 +3,6 @@ import { commentService } from './CommentService';
 import {
 	EraseCommentDTO,
 	RegisteCommentDTO,
-	SeactchCommentDTO,
 	UpdateCommentDTO,
 } from './CommentDTO';
 
@@ -17,12 +16,12 @@ export const commentController = {
 			if (!articleId || !comment) {
 				return res
 					.status(400)
-					.json('registeComment: 게시글이 삭제되었거나 댓글내용이 없습니다. ');
+					.json('게시글이 삭제되었거나 댓글 내용이 없습니다. ');
 			}
 			await commentService.createComment(user.id, articleId, comment);
 			return res
 				.status(201)
-				.json({ message: 'registeComment: 댓글이 등록되었습니다.' });
+				.json({ message: '댓글 등록에 성공했습니다.', comment });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -34,9 +33,7 @@ export const commentController = {
 			const { id, comment }: UpdateCommentDTO = req.body;
 
 			await commentService.updateComment(user.id, id, comment);
-			return res
-				.status(201)
-				.json({ message: 'updateComment: 댓글이 수정되었습니다.' });
+			return res.status(201).json({ message: '댓글 수정에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -48,9 +45,7 @@ export const commentController = {
 			const { id }: EraseCommentDTO = req.body;
 
 			await commentService.deleteComment(user.id, id);
-			return res
-				.status(201)
-				.json({ message: 'registeComment: 댓글이 삭제되었습니다.' });
+			return res.status(201).json({ message: '댓글 삭제에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -60,10 +55,12 @@ export const commentController = {
 		try {
 			const { articleId } = req.params;
 
-			await commentService.getCommentByArticleId(Number(articleId));
+			const comment = await commentService.getCommentByArticleId(
+				Number(articleId)
+			);
 			return res
 				.status(200)
-				.json({ message: 'registeComment: 댓글을 조회했습니다.' });
+				.json({ message: '댓글 조회에 성공했습니다.', comment });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

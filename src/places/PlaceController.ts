@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { placeService } from './PlaceService';
-import { userService } from '../users/UserService';
 
 import {
 	ErasePlaceDTO,
@@ -18,10 +17,14 @@ export const placeController = {
 
 			if (!placeByCreateAt || !placeByLikeCount) {
 				return res.status(400).json({
-					message: 'getMainPlaces: 메인 페이지의 자료를 찾을 수 없습니다.',
+					message: '메인 페이지의 자료를 찾을 수 없습니다.',
 				});
 			}
-			return res.status(200).json({ placeByCreateAt, placeByLikeCount });
+			return res.status(200).json({
+				message: '메인 페이지 조회에 성공했습니다.',
+				placeByCreateAt,
+				placeByLikeCount,
+			});
 		} catch (error) {
 			throw new Error(error.message);
 		}
@@ -46,26 +49,12 @@ export const placeController = {
 					.json({ message: '해당 카테고리에는 숙소가 없습니다.' });
 			}
 
-			return res.status(200).json(placesInCategory);
+			return res.status(200).json({
+				message: `카테고리 숙소 조회에 성공했습니다.`,
+				placesInCategory,
+			});
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
-		}
-	},
-	// 숙소 상세 조회
-	getPlaceDetail: async (req: Request, res: Response): Promise<Response> => {
-		try {
-			const { placeId } = req.params;
-			const place = await placeService.getPlaceById(Number(placeId));
-
-			if (!place) {
-				return res
-					.status(400)
-					.json({ message: 'getPlaceDetail: 숙소 페이지를 찾을 수 없습니다.' });
-			}
-
-			return res.status(200).json({ place });
-		} catch (error) {
-			return res.status(500).json({ error: '에러' });
 		}
 	},
 	// 전체 숙소 조회
@@ -74,15 +63,37 @@ export const placeController = {
 			const allPlaces = await placeService.getAllPlaceName();
 			if (!allPlaces || allPlaces.length === 0) {
 				return res
-					.status(400)
-					.json({ message: 'getTotalPlaces: 전체 숙소를 조회할 수 없습니다.' });
+					.status(404)
+					.json({ message: '전체 숙소를 조회할 수 없습니다.' });
 			}
 
-			return res.status(200).json(allPlaces);
+			return res
+				.status(200)
+				.json({ message: '전체 숙소를 조회에 성공했습니다.', allPlaces });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
 	},
+	// 숙소 상세페이지 조회
+	getPlaceDetail: async (req: Request, res: Response): Promise<Response> => {
+		try {
+			const { placeId } = req.params;
+			const place = await placeService.getPlaceById(Number(placeId));
+
+			if (!place) {
+				return res
+					.status(404)
+					.json({ message: '숙소 페이지를 찾을 수 없습니다.' });
+			}
+
+			return res
+				.status(200)
+				.json({ message: '숙소 상세페이지 조회에 성공했습니다.', place });
+		} catch (error) {
+			return res.status(500).json({ error: '에러' });
+		}
+	},
+
 	// 숙소 좋아요 처리
 	handleLikePlaces: async (
 		req: Request,
@@ -96,15 +107,17 @@ export const placeController = {
 
 			if (!place) {
 				return res.status(400).json({
-					message: 'unlikePlaces: 숙소가 존재하지 않습니다.',
+					message: '숙소가 존재하지 않습니다.',
 				});
 			}
 
 			await placeService.likePlace(user, place, like);
 
-			return res
-				.status(200)
-				.json({ message: `숙소 좋아요 처리에 성공했습니다.` });
+			const message = like
+				? '숙소 좋아요에 성공했습니다.'
+				: '숙소 좋아요 취소에 성공했습니다.';
+
+			return res.status(200).json({ message });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -133,9 +146,7 @@ export const placeController = {
 				!mainImage ||
 				!bookingURL
 			) {
-				return res
-					.status(400)
-					.json({ message: 'registPlace:누락된 값이 있습니다.' });
+				return res.status(400).json({ message: '누락된 필수 값이 있습니다.' });
 			}
 
 			await placeService.createPlace(
@@ -151,9 +162,7 @@ export const placeController = {
 				bookingURL
 			);
 
-			return res
-				.status(201)
-				.json({ message: 'registePlace:숙소가 등록되었습니다.' });
+			return res.status(201).json({ message: '숙소 등록에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -184,9 +193,7 @@ export const placeController = {
 				!mainImage ||
 				!bookingURL
 			) {
-				return res
-					.status(400)
-					.json({ message: 'registPlace:누락된 값이 있습니다.' });
+				return res.status(400).json({ message: '누락된 필수 값이 있습니다.' });
 			}
 
 			await placeService.updatePlace(
@@ -204,7 +211,7 @@ export const placeController = {
 			);
 			return res
 				.status(200)
-				.json({ message: 'updatePlace: 숙소 수정에 성공했습니다.' });
+				.json({ message: '숙소 정보 수정에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -216,9 +223,7 @@ export const placeController = {
 			const { id }: ErasePlaceDTO = req.body;
 
 			await placeService.deletePlace(admin.id, id);
-			return res
-				.status(200)
-				.json({ message: 'erasePlace: 숙소 삭제에 성공했습니다.' });
+			return res.status(200).json({ message: '숙소 삭제에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}

@@ -138,7 +138,7 @@ export const articleService = {
 				await UserLikeArticles.save(userLike);
 				await articleService.updateLikeArticleCounter(article, 1);
 			} else {
-				UserLikeArticles.remove(userLikedArticle);
+				await UserLikeArticles.remove(userLikedArticle);
 				await articleService.updateLikeArticleCounter(article, -1);
 			}
 		} catch (error) {

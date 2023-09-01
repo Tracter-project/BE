@@ -41,11 +41,11 @@ export const userService = {
 				await userService.isDuplicateNickname(nickname);
 
 			if (isDuplicateEmail) {
-				throw new Error('createUser: 이미 사용 중인 이메일 입니다.');
+				throw new Error('이미 사용 중인 이메일 입니다.');
 			}
 
 			if (isDuplicateNickname) {
-				throw new Error('createUser: 이미 사용 중인 닉네임입니다.');
+				throw new Error('이미 사용 중인 닉네임입니다.');
 			}
 
 			const hashedPassword: string = await bcrypt.hash(password, 10);
@@ -80,7 +80,7 @@ export const userService = {
 			const user = await userService.getUserByEmail(email);
 
 			if (!user) {
-				throw new Error('login: 입력하신 이메일은 회원가입되어 있지 않습니다.');
+				throw new Error('입력하신 이메일은 회원가입되어 있지 않습니다.');
 			}
 
 			const isValidPassword = bcrypt.compareSync(
@@ -89,12 +89,12 @@ export const userService = {
 			);
 
 			if (!isValidPassword) {
-				throw new Error('login: 비밀번호가 일치하지 않습니다.');
+				throw new Error('비밀번호가 일치하지 않습니다.');
 			}
 
 			const token = await userService.createToken(user);
 			if (!token) {
-				throw new Error('login: 토큰이 생성되지 않습니다.');
+				throw new Error('토큰이 생성되지 않습니다.');
 			}
 
 			return token;
@@ -113,13 +113,13 @@ export const userService = {
 			const user = await userService.getUserById(userId);
 
 			if (!user) {
-				throw new Error('updateUser: 사용자를 찾을 수 없습니다.');
+				throw new Error('사용자를 찾을 수 없습니다.');
 			}
 
 			const isValidPassword = await bcrypt.compare(password, user.password);
 			if (!isValidPassword) {
 				throw new Error(
-					'updateUser: 비밀번호가 일치하지 않아 회원정보를 업데이트할 수 없습니다.'
+					'비밀번호가 일치하지 않아 회원정보를 업데이트할 수 없습니다.'
 				);
 			}
 
@@ -129,7 +129,7 @@ export const userService = {
 				);
 
 				if (isDuplicateNickname) {
-					throw new Error('updateUser: 사용 중인 닉네임입니다.');
+					throw new Error('사용 중인 닉네임입니다.');
 				}
 			}
 			const hashedPassword: string = await bcrypt.hash(updatePassword, 10);
