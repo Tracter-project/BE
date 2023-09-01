@@ -19,9 +19,7 @@ export const commentController = {
 					.json('게시글이 삭제되었거나 댓글 내용이 없습니다. ');
 			}
 			await commentService.createComment(user.id, articleId, comment);
-			return res
-				.status(201)
-				.json({ message: '댓글 등록에 성공했습니다.', comment });
+			return res.status(201).json({ message: '댓글 등록에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -58,9 +56,7 @@ export const commentController = {
 			const comment = await commentService.getCommentByArticleId(
 				Number(articleId)
 			);
-			return res
-				.status(200)
-				.json({ message: '댓글 조회에 성공했습니다.', comment });
+			return res.status(200).json({ message: '댓글 조회에 성공했습니다.' });
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
