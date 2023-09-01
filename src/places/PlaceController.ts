@@ -33,7 +33,6 @@ export const placeController = {
 	): Promise<Response> => {
 		try {
 			const { category } = req.params;
-			console.log(category);
 			if (!category) {
 				return res
 					.status(400)
@@ -66,15 +65,13 @@ export const placeController = {
 
 			return res.status(200).json({ place });
 		} catch (error) {
-			return res.status(500).json({ error: error.message });
+			return res.status(500).json({ error: '에러' });
 		}
 	},
 	// 전체 숙소 조회
 	getTotalPlaces: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			console.log('asd');
 			const allPlaces = await placeService.getAllPlaceName();
-			console.log(allPlaces, allPlaces?.length);
 			if (!allPlaces || allPlaces.length === 0) {
 				return res
 					.status(400)
@@ -95,16 +92,15 @@ export const placeController = {
 		try {
 			const user = req.cookies;
 			const { placeId }: LikePlacesDTO = req.body;
-			const likeUser = await userService.getUserById(user.id);
 			const place = await placeService.getPlaceById(placeId);
 
-			if (!likeUser || !place) {
+			if (!place) {
 				return res.status(400).json({
-					message: 'unlikePlaces: 숙소 좋아요 처리에 필요한 정보가 부족합니다.',
+					message: 'unlikePlaces: 숙소가 존재하지 않습니다.',
 				});
 			}
 
-			await placeService.likePlace(likeUser, place, like);
+			await placeService.likePlace(user, place, like);
 
 			return res
 				.status(200)
