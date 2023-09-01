@@ -21,7 +21,6 @@ export const placeController = {
 				});
 			}
 			return res.status(200).json({
-				message: '메인 페이지 조회에 성공했습니다.',
 				placeByCreateAt,
 				placeByLikeCount,
 			});
@@ -49,10 +48,7 @@ export const placeController = {
 					.json({ message: '해당 카테고리에는 숙소가 없습니다.' });
 			}
 
-			return res.status(200).json({
-				message: `카테고리 숙소 조회에 성공했습니다.`,
-				placesInCategory,
-			});
+			return res.status(200).json(placesInCategory);
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
@@ -62,9 +58,7 @@ export const placeController = {
 		try {
 			const allPlaces = await placeService.getAllPlaceName();
 
-			return res
-				.status(200)
-				.json({ message: '전체 숙소를 조회에 성공했습니다.', allPlaces });
+			return res.status(200).json(allPlaces);
 		} catch (error) {
 			return res.status(500).json({ error: error.message });
 		}
