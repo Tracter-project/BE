@@ -13,11 +13,8 @@ userRouter.get('/users/validator/:email', userController.validatorEmail);
 // 닉네임 중복 체크
 userRouter.get('/users/validator/:nickname', userController.validatorNickname);
 // 회원 정보 조회 (인증 필요)
-userRouter.get('/users', tokenAuth, userController.getUserInformation);
+userRouter.post('/users/mypage', tokenAuth, userController.getUserInformation);
 // 회원 정보 수정 (인증 필요)
 userRouter.patch('/users', tokenAuth, userController.updateProfile);
 // 회원 탈퇴 (인증 필요)
 userRouter.delete('/users', tokenAuth, userController.withdrawUser);
-
-// 관리자 인증 (관리자 인증 필요 --> 생각나는대라)
-// userRouter.get('/admin', tokenAuth, adminAuth);

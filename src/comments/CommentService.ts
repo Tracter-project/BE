@@ -14,20 +14,18 @@ export const commentService = {
 			const isUser = await userService.getUserById(userId);
 
 			if (!isUser) {
-				throw new Error(
-					'createComment: 로그인한 사용하자만 댓글을 작성할 수 있습니다.'
-				);
+				throw new Error('로그인한 사용하자만 댓글을 작성할 수 있습니다.');
 			}
 
 			const newComment: Comment = new Comment();
 			if (!articleId) {
-				throw new Error('createComment: 댓글이 존재하지 않습니다.');
+				throw new Error('댓글이 존재하지 않습니다.');
 			}
 
 			const article = await articleService.getArticleById(articleId);
 
 			if (!article) {
-				throw new Error('');
+				throw new Error('게시글을 찾을 수 없습니다.');
 			}
 
 			newComment.article = article;
@@ -49,13 +47,11 @@ export const commentService = {
 			const updateComment = await commentService.getCommentById(id);
 
 			if (!updateComment) {
-				throw new Error('updateComment: 수정할 댓글을 찾을 수 없습니다.');
+				throw new Error('수정할 댓글을 찾을 수 없습니다.');
 			}
 
 			if (isUser !== null && isUser.nickname !== updateComment.writer) {
-				throw new Error(
-					'updateComment: 댓글 작성자가 아니라 댓글을 수정할 수 없습니다.'
-				);
+				throw new Error('댓글 작성자가 아니라 댓글을 수정할 수 없습니다.');
 			}
 
 			updateComment.comment = comment;
@@ -72,19 +68,17 @@ export const commentService = {
 			const deleteComment = await commentService.getCommentById(id);
 
 			if (!deleteComment) {
-				throw new Error('deleteComment: 수정할 댓글을 찾을 수 없습니다.');
+				throw new Error('수정할 댓글을 찾을 수 없습니다.');
 			}
 
 			if (isUser !== null && isUser.nickname !== deleteComment.writer) {
-				throw new Error(
-					'deleteComment: 댓글 작성자가 아니라 댓글을 삭제할 수 없습니다.'
-				);
+				throw new Error('댓글 작성자가 아니라 댓글을 삭제할 수 없습니다.');
 			}
 
 			const deleteResult = await Comment.delete({ id });
 
 			if (deleteResult.affected === 0) {
-				throw new Error('deleteComment: 삭제할 댓글이 존재하지 않습니다.');
+				throw new Error('삭제할 댓글이 존재하지 않습니다.');
 			}
 
 			return deleteResult;
