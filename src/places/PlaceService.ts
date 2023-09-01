@@ -22,8 +22,9 @@ export const placeService = {
 
 	// 숙소 검색(id)
 	getPlaceById: async (id: number): Promise<Place | null> => {
-		return await Place.findOne({ where: { id } });
+		return Place.findOne({ where: { id } });
 	},
+
 	// 숙소 전체 조회
 	getAllPlaceName: async (): Promise<Place[] | null> => {
 		try {
@@ -166,7 +167,6 @@ export const placeService = {
 			if (!isAdmin) {
 				throw new Error(`updatePlace: 관리자만 숙소를 수정할 수 있습니다.`);
 			}
-
 			const place = await placeService.getPlaceById(id);
 			if (!place) {
 				throw new Error('updatePlace: 게시글을 찾을 수 없습니다.');
@@ -186,7 +186,6 @@ export const placeService = {
 			place.mainImage = mainImage;
 			place.detailImage = detailImage;
 			place.bookingURL = bookingURL;
-
 			return Place.update(
 				{ id },
 				{

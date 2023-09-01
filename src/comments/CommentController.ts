@@ -58,9 +58,9 @@ export const commentController = {
 	// 댓글 조회
 	searchComment: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { articleId }: SeactchCommentDTO = req.body;
+			const { articleId } = req.params;
 
-			await commentService.getCommentByArticleId(articleId);
+			await commentService.getCommentByArticleId(Number(articleId));
 			return res
 				.status(200)
 				.json({ message: 'registeComment: 댓글을 조회했습니다.' });

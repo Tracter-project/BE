@@ -45,8 +45,8 @@ export const userController = {
 	// 이메일 중복 검사
 	validatorEmail: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { email }: ValidatorEmailDTO = req.body;
-			const isDuplicateEmail = await userService.getUserByEmail(email);
+			const { email } = req.params;
+			const isDuplicateEmail = await userService.isDuplicateEmail(email);
 
 			if (isDuplicateEmail) {
 				return res
@@ -63,8 +63,10 @@ export const userController = {
 	// 닉네임 중복 검사
 	validatorNickname: async (req: Request, res: Response): Promise<Response> => {
 		try {
-			const { nickname }: ValidatorNicknameDTO = req.body;
-			const isDuplicateNickname = await userService.getUserByNickname(nickname);
+			const { nickname } = req.params;
+			const isDuplicateNickname = await userService.isDuplicateNickname(
+				nickname
+			);
 
 			if (isDuplicateNickname) {
 				return res
